@@ -1,0 +1,48 @@
+--- Page 1 ---
+PURCHASE ORDER                                                                 PO Number                           PO-1001
+
+Example Trading Co.                                                            Date Issued                        1 Oct 2026
+123 Sample Street                                                             Delivery Date                      15 Oct 2026
+Springfield, ST 00000
+orders@example.com                                                      Payment Terms                                 Net 30
+                                                                                  Currency                             USD
+
+
+SUPPLIER                                 SHIP TO                                     BILL TO
+
+Example Supplies Co.                     Example Trading Co.                         Example Trading Co.
+456 Placeholder Avenue                   Warehouse, Dock 2                           Accounts Payable
+Riverton, ST 00000                       789 Demo Road                               123 Sample Street
+Contact: Alex Sample                     Springfield, ST 00000                       Springfield, ST 00000
+sales@example.net
+
+
+ #   Description                                       SKU / Item Code                    Qty       Unit Cost        Line Total
+
+ 1   Cotton tote bag, natural                          TOTE-NAT-01                        200             3.50         700.00
+
+ 2   Kraft mailer box, medium                          BOX-KRF-M                          500             0.85         425.00
+
+ 3   Recycled tissue paper, pack of 100                TIS-REC-100                         20            12.00         240.00
+
+ 4   Printed thank-you card, A6                        CRD-TY-A6                      1,000               0.18         180.00
+
+
+NOTES & TERMS
+Payment terms: Net 30 from the date of invoice. Please quote the                              Subtotal               1,545.00
+PO number on every invoice, packing slip and delivery note, and                            Tax (8%)                    123.60
+tell us before shipping if any item is short.
+                                                                                           Shipping                     75.00
+
+                                                                                                Total              $1,743.60
+
+
+
+
+Authorized by                                                                      Date
+                    Name and signature
+
+
+
+
+                                            Template by Qoblex · qoblex.com

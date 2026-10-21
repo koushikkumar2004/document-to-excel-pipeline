@@ -1,0 +1,93 @@
+{
+  "input_file": "C:\\Users\\Koushik Kumar\\OneDrive\\Desktop\\document_excel_pipeline\\test_files\\sample_invoice14.pdf",
+  "batches": [
+    {
+      "batch_number": 1,
+      "page_numbers": [
+        1
+      ],
+      "prompt_kind": "discovery",
+      "prompt": "Extract invoice/document data from the text below. The previous attempt returned\n\nan empty record, but you must inspect the visible text and extract the facts that\n\nare actually present.\n\nUse only these output field names:\n\ndocument_type\ndocument_number\ndocument_date\nseller_name\nseller_address\nseller_tax_id\nbuyer_name\nbuyer_address\nbuyer_tax_id\nreference_number\ndue_date\ncurrency\nsubtotal_amount\ndiscount_amount\ntax_amount\ntotal_amount\nremarks\nitem_code\nitem_description\nquantity\nunit\nrate\nline_amount\nextra_1\nextra_2\nextra_3\nextra_4\nextra_5\nextra_6\nextra_7\nextra_8\nextra_9\nextra_10\n\nRules:\n\n- Return JSON only, with top-level keys \"records\" and \"column_types\".\n\n- Each record must have \"page\", \"header\", and \"line_items\".\n\n- Use the supplied page number.\n\n- Put document-level facts in \"header\".\n\n- Put EACH distinct product/service table row into its own object in \"line_items\".\n\n- Keep each product name and its own description/rate together.\n\n- Use item_code for a product/service name when no dedicated item-name column exists.\n\n- Use item_description for its descriptive text.\n\n- Put a printed unit price in rate. For \"$50.00/hour\", rate is \"50.00\"\n  and unit is \"hour\" (the unit suffix of the printed unit price).\n- The unit field should contain ONLY a concise measurement unit such as hour,\n  day, kg, item, or piece. Do not copy description phrases into unit.\n- item_description must preserve descriptive text, e.g. \"8 Hours of Website\n  Development\"; do not use the description as the unit.\n- Use the printed item Total exactly. Never calculate line_amount from quantity\n  and rate, even when a discount percentage appears on the row. If the rate and\n  quantity imply 400 but the printed row total says 320, extract the printed\n  320, not a calculated 400.\n- For headers, match the value to the adjacent printed label. \"Amount Due\" and\n  \"Balance Due\" are distinct labels and may have different values.\n- If quantity or line total is blank in the source, return an empty string for it.\n- Never calculate totals, invent values, or combine different products/prices.\n\n- Leave unknown fields as empty strings. Do not return an empty record if facts\n\n  are visible in the supplied text.\n\n- Do not create keys outside the allowed field names.\n\n- Use extra_1 through extra_10 only for facts with no suitable named field.\n\n\n\nExpected JSON shape (fill it with extracted facts; do not copy empty values blindly):\n\n{\"records\":[{\"page\":1,\"header\":{\"document_type\":\"invoice\"},\"line_items\":[{\"item_code\":\"example product\",\"item_description\":\"example description\",\"rate\":\"12.50\"}]}],\"column_types\":{}}\n\nDOCUMENT TEXT:\n\n--- Page 1 ---\nTaxUp India.\n                                         101, Anukampa Mansion- II, M.I. road,\n      Company\n        Logo                                Jaipur, Rajasthan. PIN: 302001\n                                               Tel: +91 141 4915113\n                                              GSTIN: 26AAAA0000A1Z5\n\n\n                                                 Credit Note\nDocument No:                                                            Against invoice:\nDate of Issue:                                                          Date of Invoice:\nState:                                               Code\n\n                              Bill to Party                                                           Ship to Party\nName:                                                                   Name:\nAddress:                                                                Address:\n\nGSTIN:                                                                  GSTIN:\nState:                                               Code               State:                                               Code\n\n S.                         HSN                                                                CGST             SGST\nNo.   Product Description   code UOM Qty      Rate    Amount   Discount Taxable Value                                              Total\n                                                                                        Rate     Amount Rate       Amount\n                                         5 6000        30000     2000        28000             9 2520          9      2520        33040\n                                                           0                     0                 0                     0          0\n                                                           0                     0                 0                     0          0\n                                                           0                     0                 0                     0          0\n                                                           0                     0                 0                     0          0\n                                                           0                     0                 0                     0          0\n                                                           0                     0                 0                     0          0\n                                                           0                     0                 0                     0          0\n                                                           0                     0                 0                     0          0\n                                                           0                     0                 0                     0          0\n                                                           0                     0                 0                     0          0\n                                                           0                     0                 0                     0          0\n\n            Total                        5             30000     2000        28000               2520                 2520        33040\n\n                              Total amount in words                                     Total Amount before Tax                   28000\n                                                                                        Add: CGST                                  2520\n                                                                                        Add: SGST                                  2520\n                                                                                        Total Tax Amount                           5040\n                                                                                        Total Amount after Tax:                   33040\n                   Bank Details                                                    Ceritified that the particulars given above are true and correct\n\nBank A/C:                                                                                                 For TaxUp India\nBank IFSC:\n              Terms & conditions\n\n                                                            Common Seal                                Authorised signatory",
+      "raw_response": {
+        "id": "chatcmpl-bvdil8ycy6vz76akj5fal",
+        "object": "chat.completion",
+        "created": 1791633623,
+        "model": "qwen2.5-3b-instruct",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n    \"records\": [\n        {\n            \"page\": 1,\n            \"header\": {\n                \"document_type\": \"\",\n                \"document_number\": \"\",\n                \"document_date\": \"\",\n                \"seller_name\": \"TaxUp India\",\n                \"seller_address\": \"101, Anukampa Mansion- II, M.I. road,\\nJaipur, Rajasthan. PIN: 302001\\nTel: +91 141 4915113\\nGSTIN: 26AAAA0000A1Z5\",\n                \"seller_tax_id\": \"26AAAA0000A1Z5\",\n                \"buyer_name\": \"\",\n                \"buyer_address\": \"\",\n                \"buyer_tax_id\": \"\",\n                \"reference_number\": \"\",\n                \"due_date\": \"\",\n                \"currency\": \"\",\n                \"subtotal_amount\": \"33040\",\n                \"discount_amount\": \"\",\n                \"tax_amount\": \"5040\",\n                \"total_amount\": \"38080\",\n                \"remarks\": \"\",\n                \"item_code\": \"\",\n                \"item_description\": \"\",\n                \"quantity\": \"\",\n                \"unit\": \"\",\n                \"rate\": \"\",\n                \"line_amount\": \"\",\n                \"extra_1\": \"\",\n                \"extra_2\": \"\",\n                \"extra_3\": \"\",\n                \"extra_4\": \"\",\n                \"extra_5\": \"\",\n                \"extra_6\": \"\",\n                \"extra_7\": \"\",\n                \"extra_8\": \"\",\n                \"extra_9\": \"\",\n                \"extra_10\": \"\"\n            },\n            \"line_items\": [\n                {\n                    \"item_code\": \"example product\",\n                    \"item_description\": \"example description\",\n                    \"rate\": \"25.20\",\n                    \"unit\": \"piece\"\n                }\n            ]\n        }\n    ],\n    \"column_types\": {}\n}",
+              "reasoning_content": "",
+              "tool_calls": []
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 1214,
+          "completion_tokens": 387,
+          "total_tokens": 1601,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "stats": {},
+        "system_fingerprint": "qwen2.5-3b-instruct"
+      },
+      "parsed_response": {
+        "records": [
+          {
+            "page": 1,
+            "header": {
+              "document_type": "",
+              "document_number": "",
+              "document_date": "",
+              "seller_name": "TaxUp India",
+              "seller_address": "101, Anukampa Mansion- II, M.I. road,\nJaipur, Rajasthan. PIN: 302001\nTel: +91 141 4915113\nGSTIN: 26AAAA0000A1Z5",
+              "seller_tax_id": "26AAAA0000A1Z5",
+              "buyer_name": "",
+              "buyer_address": "",
+              "buyer_tax_id": "",
+              "reference_number": "",
+              "due_date": "",
+              "currency": "",
+              "subtotal_amount": "33040",
+              "discount_amount": "",
+              "tax_amount": "5040",
+              "total_amount": "38080",
+              "remarks": "",
+              "item_code": "",
+              "item_description": "",
+              "quantity": "",
+              "unit": "",
+              "rate": "",
+              "line_amount": "",
+              "extra_1": "",
+              "extra_2": "",
+              "extra_3": "",
+              "extra_4": "",
+              "extra_5": "",
+              "extra_6": "",
+              "extra_7": "",
+              "extra_8": "",
+              "extra_9": "",
+              "extra_10": ""
+            },
+            "line_items": [
+              {
+                "item_code": "example product",
+                "item_description": "example description",
+                "rate": "25.20",
+                "unit": "piece"
+              }
+            ]
+          }
+        ],
+        "column_types": {}
+      }
+    }
+  ]
+}

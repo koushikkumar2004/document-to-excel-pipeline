@@ -1,0 +1,102 @@
+{
+  "input_file": "C:\\Users\\Koushik Kumar\\OneDrive\\Desktop\\document_excel_pipeline\\test_files\\sample_invoice4.pdf",
+  "batches": [
+    {
+      "batch_number": 1,
+      "page_numbers": [
+        1
+      ],
+      "prompt_kind": "discovery",
+      "prompt": "Extract invoice/document data from the text below. The previous attempt returned\n\nan empty record, but you must inspect the visible text and extract the facts that\n\nare actually present.\n\nUse only these output field names:\n\ndocument_type\ndocument_number\ndocument_date\nseller_name\nseller_address\nseller_tax_id\nbuyer_name\nbuyer_address\nbuyer_tax_id\nreference_number\ndue_date\ncurrency\nsubtotal_amount\ndiscount_amount\ntax_amount\ntotal_amount\nremarks\nitem_code\nitem_description\nquantity\nunit\nrate\nline_amount\nextra_1\nextra_2\nextra_3\nextra_4\nextra_5\nextra_6\nextra_7\nextra_8\nextra_9\nextra_10\n\nRules:\n\n- Return JSON only, with top-level keys \"records\" and \"column_types\".\n\n- Each record must have \"page\", \"header\", and \"line_items\".\n\n- Use the supplied page number.\n\n- Put document-level facts in \"header\".\n\n- Put EACH distinct product/service table row into its own object in \"line_items\".\n\n- Keep each product name and its own description/rate together.\n\n- Use item_code for a product/service name when no dedicated item-name column exists.\n\n- Use item_description for its descriptive text.\n\n- Put a printed unit price in rate. For \"$50.00/hour\", rate is \"50.00\"\n  and unit is \"hour\" (the unit suffix of the printed unit price).\n- The unit field should contain ONLY a concise measurement unit such as hour,\n  day, kg, item, or piece. Do not copy description phrases into unit.\n- item_description must preserve descriptive text, e.g. \"8 Hours of Website\n  Development\"; do not use the description as the unit.\n- Use the printed item Total exactly. Never calculate line_amount from quantity\n  and rate, even when a discount percentage appears on the row. If the rate and\n  quantity imply 400 but the printed row total says 320, extract the printed\n  320, not a calculated 400.\n- For headers, match the value to the adjacent printed label. \"Amount Due\" and\n  \"Balance Due\" are distinct labels and may have different values.\n- If quantity or line total is blank in the source, return an empty string for it.\n- Never calculate totals, invent values, or combine different products/prices.\n\n- Leave unknown fields as empty strings. Do not return an empty record if facts\n\n  are visible in the supplied text.\n\n- Do not create keys outside the allowed field names.\n\n- Use extra_1 through extra_10 only for facts with no suitable named field.\n\n\n\nExpected JSON shape (fill it with extracted facts; do not copy empty values blindly):\n\n{\"records\":[{\"page\":1,\"header\":{\"document_type\":\"invoice\"},\"line_items\":[{\"item_code\":\"example product\",\"item_description\":\"example description\",\"rate\":\"12.50\"}]}],\"column_types\":{}}\n\nDOCUMENT TEXT:\n\n--- Page 1 ---\nPURCHASE ORDER                                                                 PO Number                           PO-1001\n\nExample Trading Co.                                                            Date Issued                        1 Oct 2026\n123 Sample Street                                                             Delivery Date                      15 Oct 2026\nSpringfield, ST 00000\norders@example.com                                                      Payment Terms                                 Net 30\n                                                                                  Currency                             USD\n\n\nSUPPLIER                                 SHIP TO                                     BILL TO\n\nExample Supplies Co.                     Example Trading Co.                         Example Trading Co.\n456 Placeholder Avenue                   Warehouse, Dock 2                           Accounts Payable\nRiverton, ST 00000                       789 Demo Road                               123 Sample Street\nContact: Alex Sample                     Springfield, ST 00000                       Springfield, ST 00000\nsales@example.net\n\n\n #   Description                                       SKU / Item Code                    Qty       Unit Cost        Line Total\n\n 1   Cotton tote bag, natural                          TOTE-NAT-01                        200             3.50         700.00\n\n 2   Kraft mailer box, medium                          BOX-KRF-M                          500             0.85         425.00\n\n 3   Recycled tissue paper, pack of 100                TIS-REC-100                         20            12.00         240.00\n\n 4   Printed thank-you card, A6                        CRD-TY-A6                      1,000               0.18         180.00\n\n\nNOTES & TERMS\nPayment terms: Net 30 from the date of invoice. Please quote the                              Subtotal               1,545.00\nPO number on every invoice, packing slip and delivery note, and                            Tax (8%)                    123.60\ntell us before shipping if any item is short.\n                                                                                           Shipping                     75.00\n\n                                                                                                Total              $1,743.60\n\n\n\n\nAuthorized by                                                                      Date\n                    Name and signature\n\n\n\n\n                                            Template by Qoblex · qoblex.comTABLE-STRUCTURE RECOVERY — REQUIRED\nThe previous response failed structural/semantic validation:\n- record 1, item 4: quantity contains multiple comma-separated values ('1,000')\n\nCorrect each listed issue by re-reading the exact source labels and table cells.\nDo not repeat a value merely because it was present in the previous response.\nRe-read the source table row by row. Do not return the same combined item.\nFor each physical product/service row, create one separate object in line_items.\nNever place comma-separated lists of different quantities, rates, item names, or\nline amounts into one item's fields. Do not put document/header facts inside\nline_items. Put invoice number/date/seller/buyer/subtotal/balance in header.\nA continuation line belongs to the closest relevant item description and is not\na new item unless it has its own item row.\nFor any field you cannot confidently identify, return an empty string.\nCheck every numeric amount against the actual printed cell/label before returning:\ndo not calculate a line amount from rate and quantity; discounts may make printed\ntotals differ from multiplication. Use \"Balance Due\"/\"Grand Total\" for total_amount\nwhen available, not a different \"Amount Due\" field. Do not duplicate document_number\nas reference_number or document_date as due_date. Keep unit to a concise unit token.\nReturn JSON only, following the required schema.",
+      "raw_response": {
+        "id": "chatcmpl-zfii19tyy2nyef6z7eb3as",
+        "object": "chat.completion",
+        "created": 1791622851,
+        "model": "qwen2.5-3b-instruct",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n  \"records\": [\n    {\n      \"page\": 1,\n      \"header\": {\n        \"document_type\": \"\",\n        \"document_number\": \"PO-1001\",\n        \"document_date\": \"1 Oct 2026\",\n        \"seller_name\": \"Example Supplies Co.\",\n        \"seller_address\": \"456 Placeholder Avenue, Riverton, ST 00000\",\n        \"seller_tax_id\": \"\",\n        \"buyer_name\": \"Example Trading Co.\",\n        \"buyer_address\": \"123 Sample Street, Springfield, ST 00000\",\n        \"buyer_tax_id\": \"\",\n        \"reference_number\": \"\",\n        \"due_date\": \"15 Oct 2026\",\n        \"currency\": \"USD\",\n        \"subtotal_amount\": \"1545.00\",\n        \"discount_amount\": \"\",\n        \"tax_amount\": \"123.60\",\n        \"total_amount\": \"1743.60\"\n      },\n      \"line_items\": [\n        {\n          \"item_code\": \"TOTE-NAT-01\",\n          \"item_description\": \"Cotton tote bag, natural\",\n          \"rate\": \"3.50\",\n          \"quantity\": \"\",\n          \"unit\": \"\",\n          \"line_amount\": \"700.00\"\n        },\n        {\n          \"item_code\": \"BOX-KRF-M\",\n          \"item_description\": \"Kraft mailer box, medium\",\n          \"rate\": \"0.85\",\n          \"quantity\": \"500\",\n          \"unit\": \"\",\n          \"line_amount\": \"425.00\"\n        },\n        {\n          \"item_code\": \"TIS-REC-100\",\n          \"item_description\": \"Recycled tissue paper, pack of 100\",\n          \"rate\": \"12.00\",\n          \"quantity\": \"20\",\n          \"unit\": \"\",\n          \"line_amount\": \"240.00\"\n        },\n        {\n          \"item_code\": \"CRD-TY-A6\",\n          \"item_description\": \"Printed thank-you card, A6\",\n          \"rate\": \"0.18\",\n          \"quantity\": \"1000\",\n          \"unit\": \"\",\n          \"line_amount\": \"180.00\"\n        }\n      ]\n    }\n  ],\n  \"column_types\": {}\n}",
+              "reasoning_content": "",
+              "tool_calls": []
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 1391,
+          "completion_tokens": 503,
+          "total_tokens": 1894,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "stats": {},
+        "system_fingerprint": "qwen2.5-3b-instruct"
+      },
+      "parsed_response": {
+        "records": [
+          {
+            "page": 1,
+            "header": {
+              "document_type": "",
+              "document_number": "PO-1001",
+              "document_date": "1 Oct 2026",
+              "seller_name": "Example Supplies Co.",
+              "seller_address": "456 Placeholder Avenue, Riverton, ST 00000",
+              "seller_tax_id": "",
+              "buyer_name": "Example Trading Co.",
+              "buyer_address": "123 Sample Street, Springfield, ST 00000",
+              "buyer_tax_id": "",
+              "reference_number": "",
+              "due_date": "15 Oct 2026",
+              "currency": "USD",
+              "subtotal_amount": "1545.00",
+              "discount_amount": "",
+              "tax_amount": "123.60",
+              "total_amount": "1743.60"
+            },
+            "line_items": [
+              {
+                "item_code": "TOTE-NAT-01",
+                "item_description": "Cotton tote bag, natural",
+                "rate": "3.50",
+                "quantity": "",
+                "unit": "",
+                "line_amount": "700.00"
+              },
+              {
+                "item_code": "BOX-KRF-M",
+                "item_description": "Kraft mailer box, medium",
+                "rate": "0.85",
+                "quantity": "500",
+                "unit": "",
+                "line_amount": "425.00"
+              },
+              {
+                "item_code": "TIS-REC-100",
+                "item_description": "Recycled tissue paper, pack of 100",
+                "rate": "12.00",
+                "quantity": "20",
+                "unit": "",
+                "line_amount": "240.00"
+              },
+              {
+                "item_code": "CRD-TY-A6",
+                "item_description": "Printed thank-you card, A6",
+                "rate": "0.18",
+                "quantity": "1000",
+                "unit": "",
+                "line_amount": "180.00"
+              }
+            ]
+          }
+        ],
+        "column_types": {}
+      }
+    }
+  ]
+}

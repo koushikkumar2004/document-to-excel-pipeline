@@ -1,0 +1,50 @@
+--- Page 1 ---
+Your Company
+                                                           Invoice
+
+Bill To:
+Client Name                                                 Invoice #:        0001
+Address
+City, ST Zip                                                Invoice Date:     5/6/03
+                                                            Customer ID:      ClientID
+
+
+
+
+Date        Your Order #       Our Order #         Sales Rep.      FOB                Ship Via        Terms          Tax ID
+5/6/03                                             J. Q. Public                       N/A             C.O.D.
+
+
+Quantity   Item            Units             Description                 Discount %         Taxable    Unit Price         Total
+1          Training                          3 Hours of Training                                       $50.00/hour        $150.00
+                                             1 Hour of Digital
+1          Photos                                                                                      $25.00/hour        $25.00
+                                             Photography.
+                                             8 Hours of Website
+1          WebDev                                                             20%                      $50.00/hour        $320.00
+                                             Development
+
+
+
+
+                                                                                                       Subtotal           $495.00
+
+                                                                                                       Tax
+       REMITTANCE
+                                                                                                       Shipping
+       Customer ID:
+       Date:                                                                                           Miscellaneous
+       Amount Due:      $247.50                                                                        Balance Due        $495.00
+       Amount Enclosed:
+
+
+
+
+         Your Company                   Phone: 101-555-1212
+         Your Address                   Email: You@yourcompany.com
+         City, ST Zip
+
+
+
+
+                                                                                                         Your Company

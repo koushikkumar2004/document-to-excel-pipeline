@@ -1,0 +1,53 @@
+--- Page 1 ---
+Sample Invoice
+                                         FIRM NAME
+                                        Attorneys at Law
+                                         PO Box 0001
+                                    New Orleans, {State} {Zip}
+
+                                          January 31, 2004
+
+Ms. Jane J. Good Client
+1234 Shady Lane
+Covington, {State} {Zip}
+
+     FOR PROFESSIONAL SERVICES RENDERED FOR THE PERIOD JANUARY 1 - JANUARY 31, 2004
+
+DATE PROFESSIONAL          DESCRIPTION                                  HOURS/RATE    AMOUNT
+1/2/04 JJJ                 Telephone conference with                    0.10 / $175   $17.50
+                           defense attorney regarding scheduling
+                           of Ms. Client's deposition
+
+1/7/04     JJJ             Meeting with Ms. Client to                 1.50 / $175     $262.50
+                           review file and prepare for her deposition
+
+1/10/04    JJJ             Attend the deposition of Ms. Client          4.00 / $175   $700.00
+
+1/17/04    MLT             Review and summarize                         1.50 / $75    $112.50
+                           deposition of Ms. Client
+
+1/18/04    JJJ             Prepare Motion for Summary                   3.00 / $175   $525.00
+                           Judgment, Memorandum in Support
+                           of Motion for Summary Judgment,
+                           and Affidavit of Ms. Client
+
+1/20/04    MLT             Court run to Civil District Court            1.00 / $75    $75.00
+                           to file Motion for Summary Judgment;
+                           obtain hearing date from division;
+                           walk through service to Sheriff
+
+                           TOTAL FEES                                                 $1,692.50
+
+                           COSTS EXPENDED ON YOUR BEHALF
+
+1/18/04                    Crackerjack Court Reporters -                              $245.00
+                           one copy of Ms. Client's deposition
+
+2/20/04                    Clerk, Civil District Court - filing fee -                 $25.00
+                           Motion for Summary Judgment
+
+1/20/04                    Civil Sheriff, Orleans Parish -                            $20.00
+                           service fee - Motion for Summary Judgment
+
+                           TOTAL COSTS                                                $290.00
+                           TOTAL AMOUNT DUE                                           $1,982.50

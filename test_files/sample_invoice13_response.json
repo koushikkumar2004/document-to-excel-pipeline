@@ -1,0 +1,87 @@
+{
+  "input_file": "C:\\Users\\Koushik Kumar\\OneDrive\\Desktop\\document_excel_pipeline\\test_files\\sample_invoice13.pdf",
+  "batches": [
+    {
+      "batch_number": 1,
+      "page_numbers": [
+        1
+      ],
+      "prompt_kind": "discovery",
+      "prompt": "Extract invoice/document data from the text below. The previous attempt returned\n\nan empty record, but you must inspect the visible text and extract the facts that\n\nare actually present.\n\nUse only these output field names:\n\ndocument_type\ndocument_number\ndocument_date\nseller_name\nseller_address\nseller_tax_id\nbuyer_name\nbuyer_address\nbuyer_tax_id\nreference_number\ndue_date\ncurrency\nsubtotal_amount\ndiscount_amount\ntax_amount\ntotal_amount\nremarks\nitem_code\nitem_description\nquantity\nunit\nrate\nline_amount\nextra_1\nextra_2\nextra_3\nextra_4\nextra_5\nextra_6\nextra_7\nextra_8\nextra_9\nextra_10\n\nRules:\n\n- Return JSON only, with top-level keys \"records\" and \"column_types\".\n\n- Each record must have \"page\", \"header\", and \"line_items\".\n\n- Use the supplied page number.\n\n- Put document-level facts in \"header\".\n\n- Put EACH distinct product/service table row into its own object in \"line_items\".\n\n- Keep each product name and its own description/rate together.\n\n- Use item_code for a product/service name when no dedicated item-name column exists.\n\n- Use item_description for its descriptive text.\n\n- Put a printed unit price in rate. For \"$50.00/hour\", rate is \"50.00\"\n  and unit is \"hour\" (the unit suffix of the printed unit price).\n- The unit field should contain ONLY a concise measurement unit such as hour,\n  day, kg, item, or piece. Do not copy description phrases into unit.\n- item_description must preserve descriptive text, e.g. \"8 Hours of Website\n  Development\"; do not use the description as the unit.\n- Use the printed item Total exactly. Never calculate line_amount from quantity\n  and rate, even when a discount percentage appears on the row. If the rate and\n  quantity imply 400 but the printed row total says 320, extract the printed\n  320, not a calculated 400.\n- For headers, match the value to the adjacent printed label. \"Amount Due\" and\n  \"Balance Due\" are distinct labels and may have different values.\n- If quantity or line total is blank in the source, return an empty string for it.\n- Never calculate totals, invent values, or combine different products/prices.\n\n- Leave unknown fields as empty strings. Do not return an empty record if facts\n\n  are visible in the supplied text.\n\n- Do not create keys outside the allowed field names.\n\n- Use extra_1 through extra_10 only for facts with no suitable named field.\n\n\n\nExpected JSON shape (fill it with extracted facts; do not copy empty values blindly):\n\n{\"records\":[{\"page\":1,\"header\":{\"document_type\":\"invoice\"},\"line_items\":[{\"item_code\":\"example product\",\"item_description\":\"example description\",\"rate\":\"12.50\"}]}],\"column_types\":{}}\n\nDOCUMENT TEXT:\n\n--- Page 1 ---\nRECEIPT\n                                             CHUNNU LAL BAKERY\n                                       123, LAL BUNGLOW, KANPUR - 9\nNo. 8752                                                                                     Date: 22th May, 2024\nReceived with thanks from                       M/s MEHUL BAKERY, SHYAM NAGAR                            a sum of\nRupee                                    Seven Thousand Nine – Hundred Fifty Only                               in\nCash / Cheque No.             14879              dated           17th May, 2024               .\n                                                                                             Authorised Signature\nNOTE:- Cheque are Subject to Realisation.\n\n\n\n\n     IMPORTANT POINTS\n\n         1. This Receipt serves as a sample for student use only.\n         2. On the following page, you will find a Receipt tailored for your specific project.\n         3. Please utilize it by filling in the blank spaces with the necessary details such as the amount,\n            date, and other pertinent information.\n         4. If you have any further questions about the project, feel free to send me a message.",
+      "raw_response": {
+        "id": "chatcmpl-yxn3b3gl16l1f2dxzxyqyd",
+        "object": "chat.completion",
+        "created": 1791633463,
+        "model": "qwen2.5-3b-instruct",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n    \"records\": [\n        {\n            \"page\": 1,\n            \"header\": {\n                \"document_type\": \"\",\n                \"document_number\": \"\",\n                \"document_date\": \"22th May, 2024\",\n                \"seller_name\": \"CHUNNU LAL BAKERY\",\n                \"seller_address\": \"123, LAL BUNGLOW, KANPUR - 9\",\n                \"seller_tax_id\": \"\",\n                \"buyer_name\": \"M/s MEHUL BAKERY, SHYAM NAGAR\",\n                \"buyer_address\": \"\",\n                \"buyer_tax_id\": \"\",\n                \"reference_number\": \"\",\n                \"due_date\": \"\",\n                \"currency\": \"Rupee\",\n                \"subtotal_amount\": \"\",\n                \"discount_amount\": \"\",\n                \"tax_amount\": \"\",\n                \"total_amount\": \"Seven Thousand Nine – Hundred Fifty Only\",\n                \"remarks\": \"\",\n                \"item_code\": \"\",\n                \"item_description\": \"\",\n                \"quantity\": \"\",\n                \"unit\": \"\",\n                \"rate\": \"\",\n                \"line_amount\": \"\",\n                \"extra_1\": \"\",\n                \"extra_2\": \"\",\n                \"extra_3\": \"\",\n                \"extra_4\": \"\",\n                \"extra_5\": \"\",\n                \"extra_6\": \"\",\n                \"extra_7\": \"\",\n                \"extra_8\": \"\",\n                \"extra_9\": \"\",\n                \"extra_10\": \"\"\n            },\n            \"line_items\": []\n        }\n    ],\n    \"column_types\": {}\n}",
+              "reasoning_content": "",
+              "tool_calls": []
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 878,
+          "completion_tokens": 310,
+          "total_tokens": 1188,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "stats": {},
+        "system_fingerprint": "qwen2.5-3b-instruct"
+      },
+      "parsed_response": {
+        "records": [
+          {
+            "page": 1,
+            "header": {
+              "document_type": "",
+              "document_number": "",
+              "document_date": "22th May, 2024",
+              "seller_name": "CHUNNU LAL BAKERY",
+              "seller_address": "123, LAL BUNGLOW, KANPUR - 9",
+              "seller_tax_id": "",
+              "buyer_name": "M/s MEHUL BAKERY, SHYAM NAGAR",
+              "buyer_address": "",
+              "buyer_tax_id": "",
+              "reference_number": "",
+              "due_date": "",
+              "currency": "Rupee",
+              "subtotal_amount": "",
+              "discount_amount": "",
+              "tax_amount": "",
+              "total_amount": "Seven Thousand Nine – Hundred Fifty Only",
+              "remarks": "",
+              "item_code": "",
+              "item_description": "",
+              "quantity": "",
+              "unit": "",
+              "rate": "",
+              "line_amount": "",
+              "extra_1": "",
+              "extra_2": "",
+              "extra_3": "",
+              "extra_4": "",
+              "extra_5": "",
+              "extra_6": "",
+              "extra_7": "",
+              "extra_8": "",
+              "extra_9": "",
+              "extra_10": ""
+            },
+            "line_items": []
+          }
+        ],
+        "column_types": {}
+      }
+    }
+  ],
+  "error": "Batch 2: extraction failed after 3 attempts: model returned valid JSON but extracted no non-empty facts. No Excel file was written for this run. Inspect the extracted text and response JSON, then try a different local model or revise the prompt."
+}

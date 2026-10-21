@@ -1,0 +1,65 @@
+{
+  "input_file": "C:\\Users\\Koushik Kumar\\OneDrive\\Desktop\\document_excel_pipeline\\test_files\\sample_invoice7.pdf",
+  "model": "qwen2.5-3b-instruct",
+  "invented_keys": [],
+  "type_warnings": [
+    {
+      "column": "document_date",
+      "row": 2,
+      "value": "January 31, 2004",
+      "expected": "date"
+    },
+    {
+      "column": "document_date",
+      "row": 3,
+      "value": "January 31, 2004",
+      "expected": "date"
+    },
+    {
+      "column": "document_date",
+      "row": 4,
+      "value": "January 31, 2004",
+      "expected": "date"
+    },
+    {
+      "column": "document_date",
+      "row": 5,
+      "value": "January 31, 2004",
+      "expected": "date"
+    },
+    {
+      "column": "document_date",
+      "row": 6,
+      "value": "January 31, 2004",
+      "expected": "date"
+    },
+    {
+      "column": "document_date",
+      "row": 7,
+      "value": "January 31, 2004",
+      "expected": "date"
+    },
+    {
+      "column": "document_date",
+      "row": 8,
+      "value": "January 31, 2004",
+      "expected": "date"
+    },
+    {
+      "column": "document_date",
+      "row": 9,
+      "value": "January 31, 2004",
+      "expected": "date"
+    },
+    {
+      "column": "document_date",
+      "row": 10,
+      "value": "January 31, 2004",
+      "expected": "date"
+    }
+  ],
+  "dropped_columns": [],
+  "record_count": 1,
+  "excel_row_count": 9,
+  "elapsed_seconds": 361.95
+}

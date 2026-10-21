@@ -1,0 +1,155 @@
+{
+  "started_at": "2026-10-09 16:25:13",
+  "samples": [
+    {
+      "sample_number": 1,
+      "input_file": "test_files\\sample_invoice.pdf",
+      "duration_seconds": 19.56,
+      "exit_code": 0,
+      "status": "SUCCESS",
+      "stdout": "============================================================\nDOCUMENT-TO-EXCEL PIPELINE\n============================================================\nStart time: 2026-10-09 16:25:16\nInput: test_files\\sample_invoice.pdf\nModel: qwen2.5-3b-instruct\nBatch size: 1\nTemperature: 0.0\nMax output tokens: 4096\n\nExtracting text...\nExtracted text saved to: test_files\\sample_invoice_extracted.txt\nTotal pages: 1\nTotal batches: 1\n\n[1/1] Batch 1: pages [1]\n  LM Studio attempt 1/2...\nBatch 1 completed in 16.40 seconds.\nRecords from batch: 1\n\nResponse saved to: test_files\\sample_invoice_response.json\nFlattening records...\nRaw Excel saved to: test_files\\sample_invoice_raw.xlsx\n\n============================================================\nPIPELINE COMPLETED\n============================================================\nEnd time: 2026-10-09 16:25:33\nTotal pages: 1\nTotal batches: 1\nTotal records: 1\nRows saved: 1\nTotal duration: 16.94 seconds\n\nExtracted text: test_files\\sample_invoice_extracted.txt\nResponse JSON: test_files\\sample_invoice_response.json\nRaw Excel: test_files\\sample_invoice_raw.xlsx\nFinal Excel: test_files\\sample_invoice.xlsx\n\nInvented/new keys: 0\nType warnings: 0\nDropped columns: 0\n\nSUCCESS\n",
+      "stderr": "",
+      "page_count": 1
+    },
+    {
+      "sample_number": 2,
+      "input_file": "test_files\\sample_invoice2.pdf",
+      "duration_seconds": 71.33,
+      "exit_code": 0,
+      "status": "SUCCESS",
+      "stdout": "============================================================\nDOCUMENT-TO-EXCEL PIPELINE\n============================================================\nStart time: 2026-10-09 16:25:35\nInput: test_files\\sample_invoice2.pdf\nModel: qwen2.5-3b-instruct\nBatch size: 1\nTemperature: 0.0\nMax output tokens: 4096\n\nExtracting text...\nExtracted text saved to: test_files\\sample_invoice2_extracted.txt\nTotal pages: 1\nTotal batches: 1\n\n[1/1] Batch 1: pages [1]\n  LM Studio attempt 1/2...\nNew approved keys: buyer_address, buyer_name, buyer_tax_id, currency, discount_amount, document_date, document_number, document_type, due_date, item_code, item_description, line_amount, quantity, rate, reference_number, remarks, seller_address, seller_name, seller_tax_id, subtotal_amount, tax_amount, total_amount, unit\nBatch 1 completed in 68.99 seconds.\nRecords from batch: 1\n\nResponse saved to: test_files\\sample_invoice2_response.json\nFlattening records...\nWARNING: Could not convert '$' to numeric for rate, row 2.\nWARNING: Could not convert '$14.95 + $19.95 + $15.99 + $4.99' to numeric for line_amount, row 2.\nRaw Excel saved to: test_files\\sample_invoice2_raw.xlsx\nWARNING: Could not convert '$' to numeric for rate, row 2.\nWARNING: Could not convert '$14.95 + $19.95 + $15.99 + $4.99' to numeric for line_amount, row 2.\n\n============================================================\nPIPELINE COMPLETED\n============================================================\nEnd time: 2026-10-09 16:26:44\nTotal pages: 1\nTotal batches: 1\nTotal records: 1\nRows saved: 1\nTotal duration: 69.28 seconds\n\nExtracted text: test_files\\sample_invoice2_extracted.txt\nResponse JSON: test_files\\sample_invoice2_response.json\nRaw Excel: test_files\\sample_invoice2_raw.xlsx\nFinal Excel: test_files\\sample_invoice2.xlsx\n\nInvented/new keys: 0\nType warnings: 4\nDropped columns: 0\n\nSUCCESS\n",
+      "stderr": "",
+      "page_count": 1
+    },
+    {
+      "sample_number": 3,
+      "input_file": "test_files\\sample_invoice3.pdf",
+      "duration_seconds": 133.17,
+      "exit_code": 0,
+      "status": "SUCCESS",
+      "stdout": "============================================================\nDOCUMENT-TO-EXCEL PIPELINE\n============================================================\nStart time: 2026-10-09 16:26:47\nInput: test_files\\sample_invoice3.pdf\nModel: qwen2.5-3b-instruct\nBatch size: 1\nTemperature: 0.0\nMax output tokens: 4096\n\nExtracting text...\nExtracted text saved to: test_files\\sample_invoice3_extracted.txt\nTotal pages: 1\nTotal batches: 1\n\n[1/1] Batch 1: pages [1]\n  LM Studio attempt 1/2...\nNew approved keys: buyer_address, buyer_name, buyer_tax_id, currency, discount_amount, document_date, document_number, document_type, due_date, item_code, item_description, line_amount, quantity, rate, reference_number, remarks, seller_address, seller_name, seller_tax_id, subtotal_amount, tax_amount, total_amount, unit\nBatch 1 completed in 128.47 seconds.\nRecords from batch: 1\n\nResponse saved to: test_files\\sample_invoice3_response.json\nFlattening records...\nRaw Excel saved to: test_files\\sample_invoice3_raw.xlsx\n\n============================================================\nPIPELINE COMPLETED\n============================================================\nEnd time: 2026-10-09 16:28:56\nTotal pages: 1\nTotal batches: 1\nTotal records: 1\nRows saved: 2\nTotal duration: 129.11 seconds\n\nExtracted text: test_files\\sample_invoice3_extracted.txt\nResponse JSON: test_files\\sample_invoice3_response.json\nRaw Excel: test_files\\sample_invoice3_raw.xlsx\nFinal Excel: test_files\\sample_invoice3.xlsx\n\nInvented/new keys: 0\nType warnings: 0\nDropped columns: 0\n\nSUCCESS\n",
+      "stderr": "",
+      "page_count": 1
+    },
+    {
+      "sample_number": 4,
+      "input_file": "test_files\\sample_invoice4.pdf",
+      "duration_seconds": 270.76,
+      "exit_code": 0,
+      "status": "SUCCESS",
+      "stdout": "============================================================\nDOCUMENT-TO-EXCEL PIPELINE\n============================================================\nStart time: 2026-10-09 16:29:03\nInput: test_files\\sample_invoice4.pdf\nModel: qwen2.5-3b-instruct\nBatch size: 1\nTemperature: 0.0\nMax output tokens: 4096\n\nExtracting text...\nExtracted text saved to: test_files\\sample_invoice4_extracted.txt\nTotal pages: 1\nTotal batches: 1\n\n[1/1] Batch 1: pages [1]\n  LM Studio attempt 1/2...\nNew approved keys: buyer_address, buyer_name, buyer_tax_id, currency, discount_amount, document_date, document_number, document_type, due_date, extra_1, extra_10, extra_2, extra_3, extra_4, extra_5, extra_6, extra_7, extra_8, extra_9, item_code, item_description, line_amount, quantity, rate, reference_number, remarks, seller_address, seller_name, seller_tax_id, subtotal_amount, tax_amount, total_amount, unit\nBatch 1 completed in 259.57 seconds.\nRecords from batch: 1\n\nResponse saved to: test_files\\sample_invoice4_response.json\nFlattening records...\nRaw Excel saved to: test_files\\sample_invoice4_raw.xlsx\n\n============================================================\nPIPELINE COMPLETED\n============================================================\nEnd time: 2026-10-09 16:33:28\nTotal pages: 1\nTotal batches: 1\nTotal records: 1\nRows saved: 4\nTotal duration: 264.88 seconds\n\nExtracted text: test_files\\sample_invoice4_extracted.txt\nResponse JSON: test_files\\sample_invoice4_response.json\nRaw Excel: test_files\\sample_invoice4_raw.xlsx\nFinal Excel: test_files\\sample_invoice4.xlsx\n\nInvented/new keys: 0\nType warnings: 0\nDropped columns: 0\n\nSUCCESS\n",
+      "stderr": "",
+      "page_count": 1
+    },
+    {
+      "sample_number": 5,
+      "input_file": "test_files\\sample_invoice5.pdf",
+      "duration_seconds": 169.92,
+      "exit_code": 0,
+      "status": "SUCCESS",
+      "stdout": "============================================================\nDOCUMENT-TO-EXCEL PIPELINE\n============================================================\nStart time: 2026-10-09 16:33:33\nInput: test_files\\sample_invoice5.pdf\nModel: qwen2.5-3b-instruct\nBatch size: 1\nTemperature: 0.0\nMax output tokens: 4096\n\nExtracting text...\nExtracted text saved to: test_files\\sample_invoice5_extracted.txt\nTotal pages: 1\nTotal batches: 1\n\n[1/1] Batch 1: pages [1]\n  LM Studio attempt 1/2...\nNew approved keys: buyer_address, buyer_name, buyer_tax_id, currency, discount_amount, document_date, document_number, document_type, due_date, extra_1, extra_10, extra_2, extra_3, extra_4, extra_5, extra_6, extra_7, extra_8, extra_9, item_code, item_description, line_amount, quantity, rate, reference_number, remarks, seller_address, seller_name, seller_tax_id, subtotal_amount, tax_amount, total_amount, unit\nBatch 1 completed in 165.06 seconds.\nRecords from batch: 1\n\nResponse saved to: test_files\\sample_invoice5_response.json\nFlattening records...\nRaw Excel saved to: test_files\\sample_invoice5_raw.xlsx\n\n============================================================\nPIPELINE COMPLETED\n============================================================\nEnd time: 2026-10-09 16:36:19\nTotal pages: 1\nTotal batches: 1\nTotal records: 1\nRows saved: 3\nTotal duration: 165.57 seconds\n\nExtracted text: test_files\\sample_invoice5_extracted.txt\nResponse JSON: test_files\\sample_invoice5_response.json\nRaw Excel: test_files\\sample_invoice5_raw.xlsx\nFinal Excel: test_files\\sample_invoice5.xlsx\n\nInvented/new keys: 0\nType warnings: 0\nDropped columns: 0\n\nSUCCESS\n",
+      "stderr": "",
+      "page_count": 1
+    },
+    {
+      "sample_number": 6,
+      "input_file": "test_files\\sample_invoice6.pdf",
+      "duration_seconds": 76.47,
+      "exit_code": 0,
+      "status": "SUCCESS",
+      "stdout": "============================================================\nDOCUMENT-TO-EXCEL PIPELINE\n============================================================\nStart time: 2026-10-09 16:36:22\nInput: test_files\\sample_invoice6.pdf\nModel: qwen2.5-3b-instruct\nBatch size: 1\nTemperature: 0.0\nMax output tokens: 4096\n\nExtracting text...\nExtracted text saved to: test_files\\sample_invoice6_extracted.txt\nTotal pages: 1\nTotal batches: 1\n\n[1/1] Batch 1: pages [1]\n  LM Studio attempt 1/2...\nNew approved keys: buyer_address, buyer_name, buyer_tax_id, currency, discount_amount, document_date, document_number, document_type, due_date, extra_1, extra_10, extra_2, extra_3, extra_4, extra_5, extra_6, extra_7, extra_8, extra_9, item_code, item_description, line_amount, quantity, rate, reference_number, remarks, seller_address, seller_name, seller_tax_id, subtotal_amount, tax_amount, total_amount, unit\nBatch 1 completed in 72.08 seconds.\nRecords from batch: 1\n\nResponse saved to: test_files\\sample_invoice6_response.json\nFlattening records...\nRaw Excel saved to: test_files\\sample_invoice6_raw.xlsx\n\n============================================================\nPIPELINE COMPLETED\n============================================================\nEnd time: 2026-10-09 16:37:35\nTotal pages: 1\nTotal batches: 1\nTotal records: 1\nRows saved: 1\nTotal duration: 72.65 seconds\n\nExtracted text: test_files\\sample_invoice6_extracted.txt\nResponse JSON: test_files\\sample_invoice6_response.json\nRaw Excel: test_files\\sample_invoice6_raw.xlsx\nFinal Excel: test_files\\sample_invoice6.xlsx\n\nInvented/new keys: 0\nType warnings: 0\nDropped columns: 0\n\nSUCCESS\n",
+      "stderr": "",
+      "page_count": 1
+    },
+    {
+      "sample_number": 7,
+      "input_file": "test_files\\sample_invoice7.pdf",
+      "duration_seconds": 328.19,
+      "exit_code": 0,
+      "status": "SUCCESS",
+      "stdout": "============================================================\nDOCUMENT-TO-EXCEL PIPELINE\n============================================================\nStart time: 2026-10-09 16:37:40\nInput: test_files\\sample_invoice7.pdf\nModel: qwen2.5-3b-instruct\nBatch size: 1\nTemperature: 0.0\nMax output tokens: 4096\n\nExtracting text...\nExtracted text saved to: test_files\\sample_invoice7_extracted.txt\nTotal pages: 1\nTotal batches: 1\n\n[1/1] Batch 1: pages [1]\n  LM Studio attempt 1/2...\nNew approved keys: buyer_address, buyer_name, buyer_tax_id, currency, discount_amount, document_date, document_number, document_type, due_date, item_code, item_description, line_amount, quantity, rate, reference_number, remarks, seller_address, seller_name, seller_tax_id, subtotal_amount, tax_amount, total_amount, unit\nBatch 1 completed in 323.10 seconds.\nRecords from batch: 1\n\nResponse saved to: test_files\\sample_invoice7_response.json\nFlattening records...\nRaw Excel saved to: test_files\\sample_invoice7_raw.xlsx\n\n============================================================\nPIPELINE COMPLETED\n============================================================\nEnd time: 2026-10-09 16:43:03\nTotal pages: 1\nTotal batches: 1\nTotal records: 1\nRows saved: 9\nTotal duration: 323.75 seconds\n\nExtracted text: test_files\\sample_invoice7_extracted.txt\nResponse JSON: test_files\\sample_invoice7_response.json\nRaw Excel: test_files\\sample_invoice7_raw.xlsx\nFinal Excel: test_files\\sample_invoice7.xlsx\n\nInvented/new keys: 0\nType warnings: 0\nDropped columns: 0\n\nSUCCESS\n",
+      "stderr": "",
+      "page_count": 1
+    },
+    {
+      "sample_number": 8,
+      "input_file": "test_files\\sample_invoice8.pdf",
+      "duration_seconds": 165.67,
+      "exit_code": 0,
+      "status": "SUCCESS",
+      "stdout": "============================================================\nDOCUMENT-TO-EXCEL PIPELINE\n============================================================\nStart time: 2026-10-09 16:43:07\nInput: test_files\\sample_invoice8.pdf\nModel: qwen2.5-3b-instruct\nBatch size: 1\nTemperature: 0.0\nMax output tokens: 4096\n\nExtracting text...\nExtracted text saved to: test_files\\sample_invoice8_extracted.txt\nTotal pages: 1\nTotal batches: 1\n\n[1/1] Batch 1: pages [1]\n  LM Studio attempt 1/2...\nNew approved keys: buyer_address, buyer_name, buyer_tax_id, currency, discount_amount, document_date, document_number, document_type, due_date, extra_1, extra_10, extra_2, extra_3, extra_4, extra_5, extra_6, extra_7, extra_8, extra_9, item_code, item_description, line_amount, quantity, rate, reference_number, remarks, seller_address, seller_name, seller_tax_id, subtotal_amount, tax_amount, total_amount, unit\nBatch 1 completed in 161.46 seconds.\nRecords from batch: 1\n\nResponse saved to: test_files\\sample_invoice8_response.json\nFlattening records...\nWARNING: Could not convert '$50.00/hour' to numeric for rate, row 2.\nWARNING: Could not convert '$25.00/hour' to numeric for rate, row 3.\nWARNING: Could not convert '$50.00/hour' to numeric for rate, row 4.\nRaw Excel saved to: test_files\\sample_invoice8_raw.xlsx\nWARNING: Could not convert '$50.00/hour' to numeric for rate, row 2.\nWARNING: Could not convert '$25.00/hour' to numeric for rate, row 3.\nWARNING: Could not convert '$50.00/hour' to numeric for rate, row 4.\n\n============================================================\nPIPELINE COMPLETED\n============================================================\nEnd time: 2026-10-09 16:45:49\nTotal pages: 1\nTotal batches: 1\nTotal records: 1\nRows saved: 3\nTotal duration: 161.94 seconds\n\nExtracted text: test_files\\sample_invoice8_extracted.txt\nResponse JSON: test_files\\sample_invoice8_response.json\nRaw Excel: test_files\\sample_invoice8_raw.xlsx\nFinal Excel: test_files\\sample_invoice8.xlsx\n\nInvented/new keys: 0\nType warnings: 6\nDropped columns: 0\n\nSUCCESS\n",
+      "stderr": "",
+      "page_count": 1
+    },
+    {
+      "sample_number": 9,
+      "input_file": "test_files\\sample_invoice9.pdf",
+      "duration_seconds": 71.17,
+      "exit_code": 0,
+      "status": "SUCCESS",
+      "stdout": "============================================================\nDOCUMENT-TO-EXCEL PIPELINE\n============================================================\nStart time: 2026-10-09 16:45:53\nInput: test_files\\sample_invoice9.pdf\nModel: qwen2.5-3b-instruct\nBatch size: 1\nTemperature: 0.0\nMax output tokens: 4096\n\nExtracting text...\nExtracted text saved to: test_files\\sample_invoice9_extracted.txt\nTotal pages: 1\nTotal batches: 1\n\n[1/1] Batch 1: pages [1]\n  LM Studio attempt 1/2...\nNew approved keys: buyer_address, buyer_name, buyer_tax_id, currency, discount_amount, document_date, document_number, document_type, due_date, item_code, item_description, line_amount, quantity, rate, reference_number, remarks, seller_address, seller_name, seller_tax_id, subtotal_amount, tax_amount, total_amount, unit\nBatch 1 completed in 67.28 seconds.\nRecords from batch: 1\n\nResponse saved to: test_files\\sample_invoice9_response.json\nFlattening records...\nWARNING: Could not convert '$' to numeric for rate, row 2.\nWARNING: Could not convert '$14.95 + $19.95 + $15.99 + $4.99' to numeric for line_amount, row 2.\nRaw Excel saved to: test_files\\sample_invoice9_raw.xlsx\nWARNING: Could not convert '$' to numeric for rate, row 2.\nWARNING: Could not convert '$14.95 + $19.95 + $15.99 + $4.99' to numeric for line_amount, row 2.\n\n============================================================\nPIPELINE COMPLETED\n============================================================\nEnd time: 2026-10-09 16:47:00\nTotal pages: 1\nTotal batches: 1\nTotal records: 1\nRows saved: 1\nTotal duration: 67.72 seconds\n\nExtracted text: test_files\\sample_invoice9_extracted.txt\nResponse JSON: test_files\\sample_invoice9_response.json\nRaw Excel: test_files\\sample_invoice9_raw.xlsx\nFinal Excel: test_files\\sample_invoice9.xlsx\n\nInvented/new keys: 0\nType warnings: 4\nDropped columns: 0\n\nSUCCESS\n",
+      "stderr": "",
+      "page_count": 1
+    },
+    {
+      "sample_number": 10,
+      "input_file": "test_files\\sample_invoice10.pdf",
+      "duration_seconds": 89.82,
+      "exit_code": 0,
+      "status": "SUCCESS",
+      "stdout": "============================================================\nDOCUMENT-TO-EXCEL PIPELINE\n============================================================\nStart time: 2026-10-09 16:47:03\nInput: test_files\\sample_invoice10.pdf\nModel: qwen2.5-3b-instruct\nBatch size: 1\nTemperature: 0.0\nMax output tokens: 4096\n\nExtracting text...\nExtracted text saved to: test_files\\sample_invoice10_extracted.txt\nTotal pages: 1\nTotal batches: 1\n\n[1/1] Batch 1: pages [1]\n  LM Studio attempt 1/2...\nNew approved keys: buyer_address, buyer_name, buyer_tax_id, currency, discount_amount, document_date, document_number, document_type, due_date, extra_1, extra_10, extra_2, extra_3, extra_4, extra_5, extra_6, extra_7, extra_8, extra_9, item_code, item_description, line_amount, quantity, rate, reference_number, remarks, seller_address, seller_name, seller_tax_id, subtotal_amount, tax_amount, total_amount, unit\nBatch 1 completed in 87.04 seconds.\nRecords from batch: 1\n\nResponse saved to: test_files\\sample_invoice10_response.json\nFlattening records...\nRaw Excel saved to: test_files\\sample_invoice10_raw.xlsx\n\n============================================================\nPIPELINE COMPLETED\n============================================================\nEnd time: 2026-10-09 16:48:30\nTotal pages: 1\nTotal batches: 1\nTotal records: 1\nRows saved: 1\nTotal duration: 87.47 seconds\n\nExtracted text: test_files\\sample_invoice10_extracted.txt\nResponse JSON: test_files\\sample_invoice10_response.json\nRaw Excel: test_files\\sample_invoice10_raw.xlsx\nFinal Excel: test_files\\sample_invoice10.xlsx\n\nInvented/new keys: 0\nType warnings: 0\nDropped columns: 0\n\nSUCCESS\n",
+      "stderr": "",
+      "page_count": 1
+    },
+    {
+      "sample_number": 11,
+      "input_file": "test_files\\sample_invoice11.pdf",
+      "duration_seconds": 67.74,
+      "exit_code": 0,
+      "status": "SUCCESS",
+      "stdout": "============================================================\nDOCUMENT-TO-EXCEL PIPELINE\n============================================================\nStart time: 2026-10-09 16:48:33\nInput: test_files\\sample_invoice11.pdf\nModel: qwen2.5-3b-instruct\nBatch size: 1\nTemperature: 0.0\nMax output tokens: 4096\n\nExtracting text...\nExtracted text saved to: test_files\\sample_invoice11_extracted.txt\nTotal pages: 1\nTotal batches: 1\n\n[1/1] Batch 1: pages [1]\n  LM Studio attempt 1/2...\nNew approved keys: buyer_address, buyer_name, buyer_tax_id, currency, discount_amount, document_date, document_number, document_type, due_date, item_code, item_description, line_amount, quantity, rate, reference_number, remarks, seller_address, seller_name, seller_tax_id, subtotal_amount, tax_amount, total_amount, unit\nBatch 1 completed in 65.07 seconds.\nRecords from batch: 1\n\nResponse saved to: test_files\\sample_invoice11_response.json\nFlattening records...\nRaw Excel saved to: test_files\\sample_invoice11_raw.xlsx\n\n============================================================\nPIPELINE COMPLETED\n============================================================\nEnd time: 2026-10-09 16:49:38\nTotal pages: 1\nTotal batches: 1\nTotal records: 1\nRows saved: 1\nTotal duration: 65.36 seconds\n\nExtracted text: test_files\\sample_invoice11_extracted.txt\nResponse JSON: test_files\\sample_invoice11_response.json\nRaw Excel: test_files\\sample_invoice11_raw.xlsx\nFinal Excel: test_files\\sample_invoice11.xlsx\n\nInvented/new keys: 0\nType warnings: 0\nDropped columns: 0\n\nSUCCESS\n",
+      "stderr": "Ignoring wrong pointing object 16 0 (offset 0)\nIgnoring wrong pointing object 17 0 (offset 0)\n",
+      "page_count": 1
+    },
+    {
+      "sample_number": 12,
+      "input_file": "test_files\\sample_invoice12.pdf",
+      "duration_seconds": 621.16,
+      "exit_code": 0,
+      "status": "SUCCESS",
+      "stdout": "============================================================\nDOCUMENT-TO-EXCEL PIPELINE\n============================================================\nStart time: 2026-10-09 16:49:41\nInput: test_files\\sample_invoice12.pdf\nModel: qwen2.5-3b-instruct\nBatch size: 1\nTemperature: 0.0\nMax output tokens: 4096\n\nExtracting text...\nExtracted text saved to: test_files\\sample_invoice12_extracted.txt\nTotal pages: 3\nTotal batches: 3\n\n[1/3] Batch 1: pages [1]\n  LM Studio attempt 1/2...\nNew approved keys: buyer_address, buyer_name, currency, discount_amount, document_date, document_number, document_type, due_date, item_code, item_description, line_amount, quantity, rate, reference_number, remarks, seller_address, seller_name, seller_tax_id, subtotal_amount, tax_amount, total_amount, unit\nBatch 1 completed in 109.13 seconds.\nRecords from batch: 1\n\n[2/3] Batch 2: pages [2]\n  LM Studio attempt 1/2...\nBatch 2 completed in 283.68 seconds.\nRecords from batch: 1\n\n[3/3] Batch 3: pages [3]\n  LM Studio attempt 1/2...\nBatch 3 completed in 224.79 seconds.\nRecords from batch: 1\n\nResponse saved to: test_files\\sample_invoice12_response.json\nFlattening records...\nRaw Excel saved to: test_files\\sample_invoice12_raw.xlsx\n\n============================================================\nPIPELINE COMPLETED\n============================================================\nEnd time: 2026-10-09 16:59:59\nTotal pages: 3\nTotal batches: 3\nTotal records: 3\nRows saved: 20\nTotal duration: 618.13 seconds\n\nExtracted text: test_files\\sample_invoice12_extracted.txt\nResponse JSON: test_files\\sample_invoice12_response.json\nRaw Excel: test_files\\sample_invoice12_raw.xlsx\nFinal Excel: test_files\\sample_invoice12.xlsx\n\nInvented/new keys: 0\nType warnings: 0\nDropped columns: 0\n\nSUCCESS\n",
+      "stderr": "",
+      "page_count": 3
+    },
+    {
+      "sample_number": 13,
+      "input_file": "test_files\\sample_invoice13.pdf",
+      "duration_seconds": 26.13,
+      "exit_code": 0,
+      "status": "SUCCESS",
+      "stdout": "============================================================\nDOCUMENT-TO-EXCEL PIPELINE\n============================================================\nStart time: 2026-10-09 17:00:03\nInput: test_files\\sample_invoice13.pdf\nModel: qwen2.5-3b-instruct\nBatch size: 1\nTemperature: 0.0\nMax output tokens: 4096\n\nExtracting text...\nExtracted text saved to: test_files\\sample_invoice13_extracted.txt\nTotal pages: 2\nTotal batches: 2\n\n[1/2] Batch 1: pages [1]\n  LM Studio attempt 1/2...\nBatch 1 completed in 13.88 seconds.\nRecords from batch: 1\n\n[2/2] Batch 2: pages [2]\n  LM Studio attempt 1/2...\nBatch 2 completed in 8.45 seconds.\nRecords from batch: 1\n\nResponse saved to: test_files\\sample_invoice13_response.json\nFlattening records...\nRaw Excel saved to: test_files\\sample_invoice13_raw.xlsx\n\n============================================================\nPIPELINE COMPLETED\n============================================================\nEnd time: 2026-10-09 17:00:26\nTotal pages: 2\nTotal batches: 2\nTotal records: 2\nRows saved: 2\nTotal duration: 22.63 seconds\n\nExtracted text: test_files\\sample_invoice13_extracted.txt\nResponse JSON: test_files\\sample_invoice13_response.json\nRaw Excel: test_files\\sample_invoice13_raw.xlsx\nFinal Excel: test_files\\sample_invoice13.xlsx\n\nInvented/new keys: 0\nType warnings: 0\nDropped columns: 0\n\nSUCCESS\n",
+      "stderr": "",
+      "page_count": 2
+    },
+    {
+      "sample_number": 14,
+      "input_file": "test_files\\sample_invoice14.pdf",
+      "duration_seconds": 67.1,
+      "exit_code": 0,
+      "status": "SUCCESS",
+      "stdout": "============================================================\nDOCUMENT-TO-EXCEL PIPELINE\n============================================================\nStart time: 2026-10-09 17:00:27\nInput: test_files\\sample_invoice14.pdf\nModel: qwen2.5-3b-instruct\nBatch size: 1\nTemperature: 0.0\nMax output tokens: 4096\n\nExtracting text...\nExtracted text saved to: test_files\\sample_invoice14_extracted.txt\nTotal pages: 1\nTotal batches: 1\n\n[1/1] Batch 1: pages [1]\n  LM Studio attempt 1/2...\nNew approved keys: buyer_address, buyer_name, buyer_tax_id, currency, discount_amount, document_date, document_number, document_type, due_date, item_code, item_description, line_amount, quantity, rate, reference_number, remarks, seller_address, seller_name, seller_tax_id, subtotal_amount, tax_amount, total_amount, unit\nBatch 1 completed in 64.92 seconds.\nRecords from batch: 1\n\nResponse saved to: test_files\\sample_invoice14_response.json\nFlattening records...\nRaw Excel saved to: test_files\\sample_invoice14_raw.xlsx\n\n============================================================\nPIPELINE COMPLETED\n============================================================\nEnd time: 2026-10-09 17:01:33\nTotal pages: 1\nTotal batches: 1\nTotal records: 1\nRows saved: 1\nTotal duration: 65.19 seconds\n\nExtracted text: test_files\\sample_invoice14_extracted.txt\nResponse JSON: test_files\\sample_invoice14_response.json\nRaw Excel: test_files\\sample_invoice14_raw.xlsx\nFinal Excel: test_files\\sample_invoice14.xlsx\n\nInvented/new keys: 0\nType warnings: 0\nDropped columns: 0\n\nSUCCESS\n",
+      "stderr": "",
+      "page_count": 1
+    },
+    {
+      "sample_number": 15,
+      "input_file": "test_files\\sample_invoice15.pdf",
+      "duration_seconds": 26.04,
+      "exit_code": 0,
+      "status": "SUCCESS",
+      "stdout": "============================================================\nDOCUMENT-TO-EXCEL PIPELINE\n============================================================\nStart time: 2026-10-09 17:01:36\nInput: test_files\\sample_invoice15.pdf\nModel: qwen2.5-3b-instruct\nBatch size: 1\nTemperature: 0.0\nMax output tokens: 4096\n\nExtracting text...\nExtracted text saved to: test_files\\sample_invoice15_extracted.txt\nTotal pages: 2\nTotal batches: 2\n\n[1/2] Batch 1: pages [1]\n  LM Studio attempt 1/2...\nBatch 1 completed in 14.32 seconds.\nRecords from batch: 1\n\n[2/2] Batch 2: pages [2]\n  LM Studio attempt 1/2...\nBatch 2 completed in 8.61 seconds.\nRecords from batch: 1\n\nResponse saved to: test_files\\sample_invoice15_response.json\nFlattening records...\nRaw Excel saved to: test_files\\sample_invoice15_raw.xlsx\n\n============================================================\nPIPELINE COMPLETED\n============================================================\nEnd time: 2026-10-09 17:01:59\nTotal pages: 2\nTotal batches: 2\nTotal records: 2\nRows saved: 2\nTotal duration: 23.16 seconds\n\nExtracted text: test_files\\sample_invoice15_extracted.txt\nResponse JSON: test_files\\sample_invoice15_response.json\nRaw Excel: test_files\\sample_invoice15_raw.xlsx\nFinal Excel: test_files\\sample_invoice15.xlsx\n\nInvented/new keys: 0\nType warnings: 0\nDropped columns: 0\n\nSUCCESS\n",
+      "stderr": "",
+      "page_count": 2
+    }
+  ]
+}

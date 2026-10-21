@@ -1,0 +1,50 @@
+--- Page 1 ---
+TAX INVOICE
+Sharma Computers                                                                                                                            Invoice no. BR-2026-00001
+12 MG Road, Bengaluru, Karnataka 560001                                                                                                              Date: 08 Sep 2026
+GSTIN: 29AABCS1429B1ZB                                                                                                                          Due date: 23 Sep 2026
+Phone: +91 98765 43210                                                                                                                             Reverse charge: No
+
+
+Billed to                                                                                                                                                  Place of supply
+Mysuru Design Studio                                                                                                                                       Karnataka (29)
+45 Sayyaji Rao Road, Mysuru, Karnataka 570001                                                                                                           Same-State supply
+GSTIN: 29AADCP5498M1ZP                                                                                                                                     CGST + SGST
+
+
+#                Description                     HSN          Qty       Unit            Rate            GST           CGST                 SGST                 Total
+
+1    Laptop / ADP machine                           8471          1        Nos      Rs. 42,000.00         18%       Rs. 3,780.00       Rs. 3,780.00            Rs. 49,560.00
+
+
+2    ADP input unit                                 8471          1        Nos        Rs. 4,500.00        18%         Rs. 405.00           Rs. 405.00           Rs. 5,310.00
+
+
+                                                                                                                                           Taxable
+                                                                                                                                                            Rs. 46,500.00
+                                                                                                                                             value
+
+                                                                                                                                           CGST +
+                                                                                                                                                              Rs. 8,370.00
+                                                                                                                                            SGST
+
+                                                                                                                                             Grand
+                                                                                                                                                            Rs. 54,870.00
+                                                                                                                                              total
+
+
+Illustrative same-State B2B example. Verify the HSN/SAC, rate, place of supply and every condition for the actual item and invoice date.
+
+
+Official references: Rule 46 — https://taxinformation.cbic.gov.in/content-page/explore-rules/1000136/1000001
+Current rate notifications — https://taxinformation.cbic.gov.in/view-pdf/1010431/ENG/Notifications
+
+
+
+
+Recipient signature                                                                     Authorised signature
+
+
+
+
+                                                           Free template · Updated 2026-09-09 · billraja.com

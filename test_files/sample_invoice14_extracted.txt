@@ -1,0 +1,51 @@
+--- Page 1 ---
+TaxUp India.
+                                         101, Anukampa Mansion- II, M.I. road,
+      Company
+        Logo                                Jaipur, Rajasthan. PIN: 302001
+                                               Tel: +91 141 4915113
+                                              GSTIN: 26AAAA0000A1Z5
+
+
+                                                 Credit Note
+Document No:                                                            Against invoice:
+Date of Issue:                                                          Date of Invoice:
+State:                                               Code
+
+                              Bill to Party                                                           Ship to Party
+Name:                                                                   Name:
+Address:                                                                Address:
+
+GSTIN:                                                                  GSTIN:
+State:                                               Code               State:                                               Code
+
+ S.                         HSN                                                                CGST             SGST
+No.   Product Description   code UOM Qty      Rate    Amount   Discount Taxable Value                                              Total
+                                                                                        Rate     Amount Rate       Amount
+                                         5 6000        30000     2000        28000             9 2520          9      2520        33040
+                                                           0                     0                 0                     0          0
+                                                           0                     0                 0                     0          0
+                                                           0                     0                 0                     0          0
+                                                           0                     0                 0                     0          0
+                                                           0                     0                 0                     0          0
+                                                           0                     0                 0                     0          0
+                                                           0                     0                 0                     0          0
+                                                           0                     0                 0                     0          0
+                                                           0                     0                 0                     0          0
+                                                           0                     0                 0                     0          0
+                                                           0                     0                 0                     0          0
+
+            Total                        5             30000     2000        28000               2520                 2520        33040
+
+                              Total amount in words                                     Total Amount before Tax                   28000
+                                                                                        Add: CGST                                  2520
+                                                                                        Add: SGST                                  2520
+                                                                                        Total Tax Amount                           5040
+                                                                                        Total Amount after Tax:                   33040
+                   Bank Details                                                    Ceritified that the particulars given above are true and correct
+
+Bank A/C:                                                                                                 For TaxUp India
+Bank IFSC:
+              Terms & conditions
+
+                                                            Common Seal                                Authorised signatory

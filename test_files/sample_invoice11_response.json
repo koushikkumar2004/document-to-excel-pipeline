@@ -1,0 +1,94 @@
+{
+  "input_file": "C:\\Users\\Koushik Kumar\\OneDrive\\Desktop\\document_excel_pipeline\\test_files\\sample_invoice11.pdf",
+  "batches": [
+    {
+      "batch_number": 1,
+      "page_numbers": [
+        1
+      ],
+      "prompt_kind": "discovery",
+      "prompt": "Extract invoice/document data from the text below. The previous attempt returned\n\nan empty record, but you must inspect the visible text and extract the facts that\n\nare actually present.\n\nUse only these output field names:\n\ndocument_type\ndocument_number\ndocument_date\nseller_name\nseller_address\nseller_tax_id\nbuyer_name\nbuyer_address\nbuyer_tax_id\nreference_number\ndue_date\ncurrency\nsubtotal_amount\ndiscount_amount\ntax_amount\ntotal_amount\nremarks\nitem_code\nitem_description\nquantity\nunit\nrate\nline_amount\nextra_1\nextra_2\nextra_3\nextra_4\nextra_5\nextra_6\nextra_7\nextra_8\nextra_9\nextra_10\n\nRules:\n\n- Return JSON only, with top-level keys \"records\" and \"column_types\".\n\n- Each record must have \"page\", \"header\", and \"line_items\".\n\n- Use the supplied page number.\n\n- Put document-level facts in \"header\".\n\n- Put EACH distinct product/service table row into its own object in \"line_items\".\n\n- Keep each product name and its own description/rate together.\n\n- Use item_code for a product/service name when no dedicated item-name column exists.\n\n- Use item_description for its descriptive text.\n\n- Put a printed unit price in rate. For \"$50.00/hour\", rate is \"50.00\"\n  and unit is \"hour\" (the unit suffix of the printed unit price).\n- The unit field should contain ONLY a concise measurement unit such as hour,\n  day, kg, item, or piece. Do not copy description phrases into unit.\n- item_description must preserve descriptive text, e.g. \"8 Hours of Website\n  Development\"; do not use the description as the unit.\n- Use the printed item Total exactly. Never calculate line_amount from quantity\n  and rate, even when a discount percentage appears on the row. If the rate and\n  quantity imply 400 but the printed row total says 320, extract the printed\n  320, not a calculated 400.\n- For headers, match the value to the adjacent printed label. \"Amount Due\" and\n  \"Balance Due\" are distinct labels and may have different values.\n- If quantity or line total is blank in the source, return an empty string for it.\n- Never calculate totals, invent values, or combine different products/prices.\n\n- Leave unknown fields as empty strings. Do not return an empty record if facts\n\n  are visible in the supplied text.\n\n- Do not create keys outside the allowed field names.\n\n- Use extra_1 through extra_10 only for facts with no suitable named field.\n\n\n\nExpected JSON shape (fill it with extracted facts; do not copy empty values blindly):\n\n{\"records\":[{\"page\":1,\"header\":{\"document_type\":\"invoice\"},\"line_items\":[{\"item_code\":\"example product\",\"item_description\":\"example description\",\"rate\":\"12.50\"}]}],\"column_types\":{}}\n\nDOCUMENT TEXT:\n\n--- Page 1 ---\nPACKING LIST SAMPLE • NOT FOR RESALE\n\nSHIPPER / EXPORTER LAKAY BUSINESS LTDA. CNPJ: 42.080.107/0001-37 Head Of ce:\nCampinas, Brazil SISCOMEX/RADAR: Habilitado\n\nCONSIGNEE (To be completed by buyer)\n\nSHIPMENT DETAILS Packing List No.: [PL-S-2025-001] Date: October 21, 2025 Mode of\nTransport: Air Freight / Courier Proforma Invoice No.: [S-2025-001] Reason for Export:\nSamples for quality evaluation (Non-commercial)\n\nCONTENTS & PACKING DETAILS\n\n\n\n\n                                                       Quantit                Gross\n                                                   HS          Net                  C\n                                                       y                      Weig\nShipping Marks Description of Goods                Cod         Weight               B\n                                                       (Carton                ht\n                                                   e           (kg)                 M\n                                                       s)                     (kg)\n\nLAKAY\n                    Refined Cane Sugar -\nBUSINESS                                           170                                0.\n                    ICUMSA 45(Sample Kit: 1 kg                    1 10.00     11.00\nSAMPLE CTN                                         1.99                               02\n                    × 10 bags)\n1/1\n\n                                                                                      0.\nTOTALS                                                    1 CTN    10.00      11.00\n                                                                                      02\n\n\n\n\nNOTES\n\n  •   SAMPLES - NOT FOR RESALE\n\n  •   NO COMMERCIAL VALUE\n\n\nLAKAY BUSINESS LTDA.\n\n\n\n(Authorized Signature)\n\n\n\n\n                                                                       fi",
+      "raw_response": {
+        "id": "chatcmpl-l3fl7la4iee2lyx7b9n1vd",
+        "object": "chat.completion",
+        "created": 1791633211,
+        "model": "qwen2.5-3b-instruct",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n  \"records\": [\n    {\n      \"page\": 1,\n      \"header\": {\n        \"document_type\": \"invoice\",\n        \"document_number\": \"\",\n        \"document_date\": \"October 21, 2025\",\n        \"seller_name\": \"LAKAY BUSINESS LTDA.\",\n        \"seller_address\": \"Campinas, Brazil\",\n        \"seller_tax_id\": \"42.080.107/0001-37\",\n        \"buyer_name\": \"\",\n        \"buyer_address\": \"\",\n        \"buyer_tax_id\": \"\",\n        \"reference_number\": \"[S-2025-001]\",\n        \"due_date\": \"\",\n        \"currency\": \"\",\n        \"subtotal_amount\": \"\",\n        \"discount_amount\": \"\",\n        \"tax_amount\": \"\",\n        \"total_amount\": \"\",\n        \"remarks\": \"SAMPLES - NOT FOR RESALE\\nNO COMMERCIAL VALUE\",\n        \"item_code\": \"\",\n        \"item_description\": \"\",\n        \"quantity\": \"\",\n        \"unit\": \"\",\n        \"rate\": \"\",\n        \"line_amount\": \"\",\n        \"extra_1\": \"\",\n        \"extra_2\": \"\",\n        \"extra_3\": \"\",\n        \"extra_4\": \"\",\n        \"extra_5\": \"\",\n        \"extra_6\": \"\",\n        \"extra_7\": \"\",\n        \"extra_8\": \"\",\n        \"extra_9\": \"\",\n        \"extra_10\": \"\"\n      },\n      \"line_items\": [\n        {\n          \"item_code\": \"example product\",\n          \"item_description\": \"Refined Cane Sugar - ICUMSA 45(Sample Kit: 1 kg × 10 bags)\",\n          \"rate\": \"12.50\",\n          \"quantity\": \"\",\n          \"unit\": \"\"\n        }\n      ]\n    }\n  ],\n  \"column_types\": {}\n}",
+              "reasoning_content": "",
+              "tool_calls": []
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 1000,
+          "completion_tokens": 382,
+          "total_tokens": 1382,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "stats": {},
+        "system_fingerprint": "qwen2.5-3b-instruct"
+      },
+      "parsed_response": {
+        "records": [
+          {
+            "page": 1,
+            "header": {
+              "document_type": "invoice",
+              "document_number": "",
+              "document_date": "October 21, 2025",
+              "seller_name": "LAKAY BUSINESS LTDA.",
+              "seller_address": "Campinas, Brazil",
+              "seller_tax_id": "42.080.107/0001-37",
+              "buyer_name": "",
+              "buyer_address": "",
+              "buyer_tax_id": "",
+              "reference_number": "[S-2025-001]",
+              "due_date": "",
+              "currency": "",
+              "subtotal_amount": "",
+              "discount_amount": "",
+              "tax_amount": "",
+              "total_amount": "",
+              "remarks": "SAMPLES - NOT FOR RESALE\nNO COMMERCIAL VALUE",
+              "item_code": "",
+              "item_description": "",
+              "quantity": "",
+              "unit": "",
+              "rate": "",
+              "line_amount": "",
+              "extra_1": "",
+              "extra_2": "",
+              "extra_3": "",
+              "extra_4": "",
+              "extra_5": "",
+              "extra_6": "",
+              "extra_7": "",
+              "extra_8": "",
+              "extra_9": "",
+              "extra_10": ""
+            },
+            "line_items": [
+              {
+                "item_code": "example product",
+                "item_description": "Refined Cane Sugar - ICUMSA 45(Sample Kit: 1 kg × 10 bags)",
+                "rate": "12.50",
+                "quantity": "",
+                "unit": ""
+              }
+            ]
+          }
+        ],
+        "column_types": {}
+      }
+    }
+  ]
+}

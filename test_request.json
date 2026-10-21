@@ -1,0 +1,10 @@
+﻿{
+  "model": "qwen2.5-3b-instruct",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Say hello"
+    }
+  ],
+  "temperature": 0
+}

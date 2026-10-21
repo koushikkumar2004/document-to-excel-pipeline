@@ -1,0 +1,135 @@
+{
+  "input_file": "C:\\Users\\Koushik Kumar\\OneDrive\\Desktop\\document_excel_pipeline\\test_files\\sample_invoice7.pdf",
+  "batches": [
+    {
+      "batch_number": 1,
+      "page_numbers": [
+        1
+      ],
+      "prompt_kind": "discovery",
+      "prompt": "Extract invoice/document data from the text below. The previous attempt returned\n\nan empty record, but you must inspect the visible text and extract the facts that\n\nare actually present.\n\nUse only these output field names:\n\ndocument_type\ndocument_number\ndocument_date\nseller_name\nseller_address\nseller_tax_id\nbuyer_name\nbuyer_address\nbuyer_tax_id\nreference_number\ndue_date\ncurrency\nsubtotal_amount\ndiscount_amount\ntax_amount\ntotal_amount\nremarks\nitem_code\nitem_description\nquantity\nunit\nrate\nline_amount\nextra_1\nextra_2\nextra_3\nextra_4\nextra_5\nextra_6\nextra_7\nextra_8\nextra_9\nextra_10\n\nRules:\n\n- Return JSON only, with top-level keys \"records\" and \"column_types\".\n\n- Each record must have \"page\", \"header\", and \"line_items\".\n\n- Use the supplied page number.\n\n- Put document-level facts in \"header\".\n\n- Put EACH distinct product/service table row into its own object in \"line_items\".\n\n- Keep each product name and its own description/rate together.\n\n- Use item_code for a product/service name when no dedicated item-name column exists.\n\n- Use item_description for its descriptive text.\n\n- Put a printed unit price in rate. For \"$50.00/hour\", rate is \"50.00\"\n  and unit is \"hour\" (the unit suffix of the printed unit price).\n- The unit field should contain ONLY a concise measurement unit such as hour,\n  day, kg, item, or piece. Do not copy description phrases into unit.\n- item_description must preserve descriptive text, e.g. \"8 Hours of Website\n  Development\"; do not use the description as the unit.\n- Use the printed item Total exactly. Never calculate line_amount from quantity\n  and rate, even when a discount percentage appears on the row. If the rate and\n  quantity imply 400 but the printed row total says 320, extract the printed\n  320, not a calculated 400.\n- For headers, match the value to the adjacent printed label. \"Amount Due\" and\n  \"Balance Due\" are distinct labels and may have different values.\n- If quantity or line total is blank in the source, return an empty string for it.\n- Never calculate totals, invent values, or combine different products/prices.\n\n- Leave unknown fields as empty strings. Do not return an empty record if facts\n\n  are visible in the supplied text.\n\n- Do not create keys outside the allowed field names.\n\n- Use extra_1 through extra_10 only for facts with no suitable named field.\n\n\n\nExpected JSON shape (fill it with extracted facts; do not copy empty values blindly):\n\n{\"records\":[{\"page\":1,\"header\":{\"document_type\":\"invoice\"},\"line_items\":[{\"item_code\":\"example product\",\"item_description\":\"example description\",\"rate\":\"12.50\"}]}],\"column_types\":{}}\n\nDOCUMENT TEXT:\n\n--- Page 1 ---\nSample Invoice\n                                         FIRM NAME\n                                        Attorneys at Law\n                                         PO Box 0001\n                                    New Orleans, {State} {Zip}\n\n                                          January 31, 2004\n\nMs. Jane J. Good Client\n1234 Shady Lane\nCovington, {State} {Zip}\n\n     FOR PROFESSIONAL SERVICES RENDERED FOR THE PERIOD JANUARY 1 - JANUARY 31, 2004\n\nDATE PROFESSIONAL          DESCRIPTION                                  HOURS/RATE    AMOUNT\n1/2/04 JJJ                 Telephone conference with                    0.10 / $175   $17.50\n                           defense attorney regarding scheduling\n                           of Ms. Client's deposition\n\n1/7/04     JJJ             Meeting with Ms. Client to                 1.50 / $175     $262.50\n                           review file and prepare for her deposition\n\n1/10/04    JJJ             Attend the deposition of Ms. Client          4.00 / $175   $700.00\n\n1/17/04    MLT             Review and summarize                         1.50 / $75    $112.50\n                           deposition of Ms. Client\n\n1/18/04    JJJ             Prepare Motion for Summary                   3.00 / $175   $525.00\n                           Judgment, Memorandum in Support\n                           of Motion for Summary Judgment,\n                           and Affidavit of Ms. Client\n\n1/20/04    MLT             Court run to Civil District Court            1.00 / $75    $75.00\n                           to file Motion for Summary Judgment;\n                           obtain hearing date from division;\n                           walk through service to Sheriff\n\n                           TOTAL FEES                                                 $1,692.50\n\n                           COSTS EXPENDED ON YOUR BEHALF\n\n1/18/04                    Crackerjack Court Reporters -                              $245.00\n                           one copy of Ms. Client's deposition\n\n2/20/04                    Clerk, Civil District Court - filing fee -                 $25.00\n                           Motion for Summary Judgment\n\n1/20/04                    Civil Sheriff, Orleans Parish -                            $20.00\n                           service fee - Motion for Summary Judgment\n\n                           TOTAL COSTS                                                $290.00\n                           TOTAL AMOUNT DUE                                           $1,982.50TABLE-STRUCTURE RECOVERY — REQUIRED\nThe previous response failed structural/semantic validation:\n- record 1, item 5: line_amount '$25' has no matching numeric value in source text\n- record 1, item 6: line_amount '$20' has no matching numeric value in source text\n\nCorrect each listed issue by re-reading the exact source labels and table cells.\nDo not repeat a value merely because it was present in the previous response.\nRe-read the source table row by row. Do not return the same combined item.\nFor each physical product/service row, create one separate object in line_items.\nNever place comma-separated lists of different quantities, rates, item names, or\nline amounts into one item's fields. Do not put document/header facts inside\nline_items. Put invoice number/date/seller/buyer/subtotal/balance in header.\nA continuation line belongs to the closest relevant item description and is not\na new item unless it has its own item row.\nFor any field you cannot confidently identify, return an empty string.\nCheck every numeric amount against the actual printed cell/label before returning:\ndo not calculate a line amount from rate and quantity; discounts may make printed\ntotals differ from multiplication. Use \"Balance Due\"/\"Grand Total\" for total_amount\nwhen available, not a different \"Amount Due\" field. Do not duplicate document_number\nas reference_number or document_date as due_date. Keep unit to a concise unit token.\nReturn JSON only, following the required schema.",
+      "raw_response": {
+        "id": "chatcmpl-03kd5jc8v38kba1ugqy6qv8",
+        "object": "chat.completion",
+        "created": 1791623394,
+        "model": "qwen2.5-3b-instruct",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n  \"records\": [\n    {\n      \"page\": 1,\n      \"header\": {\n        \"document_type\": \"invoice\",\n        \"document_number\": \"\",\n        \"document_date\": \"January 31, 2004\",\n        \"seller_name\": \"FIRM NAME\",\n        \"seller_address\": \"PO Box 0001\\nNew Orleans, {State} {Zip}\",\n        \"buyer_name\": \"Ms. Jane J. Good Client\",\n        \"buyer_address\": \"1234 Shady Lane\\nCovington, {State} {Zip}\",\n        \"reference_number\": \"\",\n        \"due_date\": \"\"\n      },\n      \"line_items\": [\n        {\n          \"item_code\": \"JJJ - Telephone conference with defense attorney regarding scheduling of Ms. Client's deposition\",\n          \"item_description\": \"Telephone conference with defense attorney regarding scheduling of Ms. Client's deposition\",\n          \"rate\": \"$175/hour\",\n          \"quantity\": \"0.10\",\n          \"unit\": \"hour\",\n          \"line_amount\": \"$17.50\"\n        },\n        {\n          \"item_code\": \"JJJ - Meeting with Ms. Client to review file and prepare for her deposition\",\n          \"item_description\": \"Meeting with Ms. Client to review file and prepare for her deposition\",\n          \"rate\": \"$175/hour\",\n          \"quantity\": \"1.50\",\n          \"unit\": \"hour\",\n          \"line_amount\": \"$262.50\"\n        },\n        {\n          \"item_code\": \"JJJ - Attend the deposition of Ms. Client\",\n          \"item_description\": \"Attend the deposition of Ms. Client\",\n          \"rate\": \"$175/hour\",\n          \"quantity\": \"4.00\",\n          \"unit\": \"hour\",\n          \"line_amount\": \"$700.00\"\n        },\n        {\n          \"item_code\": \"MLT - Review and summarize deposition of Ms. Client\",\n          \"item_description\": \"Review and summarize deposition of Ms. Client\",\n          \"rate\": \"$75/hour\",\n          \"quantity\": \"1.50\",\n          \"unit\": \"hour\",\n          \"line_amount\": \"$112.50\"\n        },\n        {\n          \"item_code\": \"JJJ - Prepare Motion for Summary Judgment, Memorandum in Support of Motion for Summary Judgment, and Affidavit of Ms. Client\",\n          \"item_description\": \"Prepare Motion for Summary Judgment, Memorandum in Support of Motion for Summary Judgment, and Affidavit of Ms. Client\",\n          \"rate\": \"$175/hour\",\n          \"quantity\": \"3.00\",\n          \"unit\": \"hour\",\n          \"line_amount\": \"$525.00\"\n        },\n        {\n          \"item_code\": \"MLT - Court run to Civil District Court to file Motion for Summary Judgment; obtain hearing date from division; walk through service to Sheriff\",\n          \"item_description\": \"Court run to Civil District Court to file Motion for Summary Judgment; obtain hearing date from division; walk through service to Sheriff\",\n          \"rate\": \"$75/hour\",\n          \"quantity\": \"1.00\",\n          \"unit\": \"hour\",\n          \"line_amount\": \"$75.00\"\n        },\n        {\n          \"item_code\": \"Crackerjack Court Reporters - one copy of Ms. Client's deposition\",\n          \"item_description\": \"one copy of Ms. Client's deposition\",\n          \"rate\": \"\",\n          \"quantity\": \"\",\n          \"unit\": \"\",\n          \"line_amount\": \"$245.00\"\n        },\n        {\n          \"item_code\": \"Clerk, Civil District Court - filing fee for Motion for Summary Judgment\",\n          \"item_description\": \"filing fee for Motion for Summary Judgment\",\n          \"rate\": \"\",\n          \"quantity\": \"\",\n          \"unit\": \"\",\n          \"line_amount\": \"$25.00\"\n        },\n        {\n          \"item_code\": \"Civil Sheriff, Orleans Parish - service fee for Motion for Summary Judgment\",\n          \"item_description\": \"service fee for Motion for Summary Judgment\",\n          \"rate\": \"\",\n          \"quantity\": \"\",\n          \"unit\": \"\",\n          \"line_amount\": \"$20.00\"\n        }\n      ]\n    }\n  ],\n  \"column_types\": {}\n}",
+              "reasoning_content": "",
+              "tool_calls": []
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 1512,
+          "completion_tokens": 904,
+          "total_tokens": 2416,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "stats": {},
+        "system_fingerprint": "qwen2.5-3b-instruct"
+      },
+      "parsed_response": {
+        "records": [
+          {
+            "page": 1,
+            "header": {
+              "document_type": "invoice",
+              "document_number": "",
+              "document_date": "January 31, 2004",
+              "seller_name": "FIRM NAME",
+              "seller_address": "PO Box 0001\nNew Orleans, {State} {Zip}",
+              "buyer_name": "Ms. Jane J. Good Client",
+              "buyer_address": "1234 Shady Lane\nCovington, {State} {Zip}",
+              "reference_number": "",
+              "due_date": ""
+            },
+            "line_items": [
+              {
+                "item_code": "JJJ - Telephone conference with defense attorney regarding scheduling of Ms. Client's deposition",
+                "item_description": "Telephone conference with defense attorney regarding scheduling of Ms. Client's deposition",
+                "rate": "$175/hour",
+                "quantity": "0.10",
+                "unit": "hour",
+                "line_amount": "$17.50"
+              },
+              {
+                "item_code": "JJJ - Meeting with Ms. Client to review file and prepare for her deposition",
+                "item_description": "Meeting with Ms. Client to review file and prepare for her deposition",
+                "rate": "$175/hour",
+                "quantity": "1.50",
+                "unit": "hour",
+                "line_amount": "$262.50"
+              },
+              {
+                "item_code": "JJJ - Attend the deposition of Ms. Client",
+                "item_description": "Attend the deposition of Ms. Client",
+                "rate": "$175/hour",
+                "quantity": "4.00",
+                "unit": "hour",
+                "line_amount": "$700.00"
+              },
+              {
+                "item_code": "MLT - Review and summarize deposition of Ms. Client",
+                "item_description": "Review and summarize deposition of Ms. Client",
+                "rate": "$75/hour",
+                "quantity": "1.50",
+                "unit": "hour",
+                "line_amount": "$112.50"
+              },
+              {
+                "item_code": "JJJ - Prepare Motion for Summary Judgment, Memorandum in Support of Motion for Summary Judgment, and Affidavit of Ms. Client",
+                "item_description": "Prepare Motion for Summary Judgment, Memorandum in Support of Motion for Summary Judgment, and Affidavit of Ms. Client",
+                "rate": "$175/hour",
+                "quantity": "3.00",
+                "unit": "hour",
+                "line_amount": "$525.00"
+              },
+              {
+                "item_code": "MLT - Court run to Civil District Court to file Motion for Summary Judgment; obtain hearing date from division; walk through service to Sheriff",
+                "item_description": "Court run to Civil District Court to file Motion for Summary Judgment; obtain hearing date from division; walk through service to Sheriff",
+                "rate": "$75/hour",
+                "quantity": "1.00",
+                "unit": "hour",
+                "line_amount": "$75.00"
+              },
+              {
+                "item_code": "Crackerjack Court Reporters - one copy of Ms. Client's deposition",
+                "item_description": "one copy of Ms. Client's deposition",
+                "rate": "",
+                "quantity": "",
+                "unit": "",
+                "line_amount": "$245.00"
+              },
+              {
+                "item_code": "Clerk, Civil District Court - filing fee for Motion for Summary Judgment",
+                "item_description": "filing fee for Motion for Summary Judgment",
+                "rate": "",
+                "quantity": "",
+                "unit": "",
+                "line_amount": "$25.00"
+              },
+              {
+                "item_code": "Civil Sheriff, Orleans Parish - service fee for Motion for Summary Judgment",
+                "item_description": "service fee for Motion for Summary Judgment",
+                "rate": "",
+                "quantity": "",
+                "unit": "",
+                "line_amount": "$20.00"
+              }
+            ]
+          }
+        ],
+        "column_types": {}
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Testing & caches
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Poppler binary distribution
+bin/
+
+# OS generated
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+.DS_Store

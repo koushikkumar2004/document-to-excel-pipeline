@@ -1,0 +1,44 @@
+--- Page 1 ---
+Date:
+
+
+
+
+Your Company Name                                 European Union Customers:
+                                                  Please see important note below
+311 Woodland Drive
+Hillsboro, OH 45133                               Phone (555) 555-5555
+http://www.yourcompany.com                        Fax (555) 555-5555
+E-mail xxx@company.com                            Tax ID Number: 55-55555
+
+Purchase Order# (if applicable):
+
+ Bill To:                                         Ship To: Check here if same as bill
+                                                  to:_______
+
+
+
+
+ e-mail address:
+ Qty      Item                    Description                        Each             Total
+
+            Data On The Run       Pocket PC database software       $14.95    $
+
+                                  Pocket PC diet and exercise
+            Mobile Coach                                            $19.95    $
+                                  software
+            Mobile Coach for      Windows diet and exercise
+                                                                    $15.99    $
+            Windows               software
+
+            CopyText Pro          Pocket PC text utility software   $4.99     $
+
+
+                                                                    Total :       $
+
+ Thanks for your business! Payment should be made in US
+ funds to Biomobility, LLC. For technical support, visit our web    Taxes (Ohio residents
+ site at Customers from European Union countries should use to      add 6%) $
+ purchase software; because of changes in the way VAT tax is
+ handled, all
+                                                                    Balance Due $

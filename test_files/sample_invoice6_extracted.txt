@@ -1,0 +1,68 @@
+--- Page 1 ---
+06/10/2026, 22:55                                                    Filled sample — Delivery Challan Format — Free Download (PDF) | Fleetbooks
+
+
+                                                                     YOUR BUSINESS NAME · ADDRESS · GSTIN · PHONE
+
+
+
+
+  Delivery Challan                                                                                                                                                                            CHALLAN NO.
+
+  Issued under Rule 55 of the CGST Rules, 2017 — not a tax invoice                                                                                                                                DC-114
+
+
+    CONSIGNOR — NAME, ADDRESS, GSTIN                                                                       CONSIGNEE — NAME, ADDRESS, GSTIN
+
+                                                                                                           Sri Balaji Agro Mills
+                                                                                                           221 Redhills Road, Ambattur, Chennai, Tamil Nadu 600053
+                                                                                                           GSTIN: 33AACFS4471M1Z9
+
+
+    DATE                                                                 VEHICLE NO.                                                          TRANSPORTER / MODE
+    14-08-2026                                                           TN 45 AB 1234                                                        Veerapathra Traders (own vehicle)
+
+   SL           DESCRIPTION OF GOODS                                                 HSN                                QTY     UNIT                               RATE                  TAXABLE VALUE
+
+   1            Maize — bulk, in gunny bags                                          1005                             250       bags                     1,160.00                        2,90,000.00
+
+   2
+
+   3
+
+   4
+
+   5
+
+   6
+
+   7
+
+   8
+
+                                                                                                                                         Total taxable value (₹)                         2,90,000.00
+
+    AMOUNT IN WORDS
+
+    Two lakh ninety thousand rupees only
+
+  REASON FOR TRANSPORTATION — TICK ONE
+       Job work          Stock transfer        Goods on approval            Repair / servicing          Exhibition / demo          Own use / site transfer
+
+  Declaration: the goods described above are being moved for the reason ticked and no sale is involved. Value shown is for the purpose of this movement only. Certified that the particulars given are true
+  and correct.
+
+
+
+  Received by — name & signature                                       Driver / transporter                                                  Signature of issuer
+
+
+  Free format from fleetbooks.in                                                                                                                                                fleetbooks.in · +91 63010 23968
+
+
+                                                                        Free format from fleetbooks.in · WhatsApp +91 63010 23968
+
+
+
+
+https://fleetbooks.in/tools/delivery-challan-format/filled-sample/?utm_source=chatgpt.com                                                                                                                     1/1

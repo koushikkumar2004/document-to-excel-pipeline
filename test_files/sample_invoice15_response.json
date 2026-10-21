@@ -1,0 +1,76 @@
+{
+  "batches": [
+    {
+      "batch_number": 1,
+      "page_numbers": [
+        1
+      ],
+      "prompt": "\nYou are a document information extraction system.\n\nExtract facts from the supplied document pages.\n\nUse ONLY these fixed columns:\n\ndocument_type\ndocument_number\ndocument_date\nseller_name\nseller_address\nseller_tax_id\nbuyer_name\nbuyer_address\nbuyer_tax_id\nreference_number\ndue_date\ncurrency\nsubtotal_amount\ndiscount_amount\ntax_amount\ntotal_amount\nremarks\nitem_code\nitem_description\nquantity\nunit\nrate\nline_amount\nextra_1\nextra_2\nextra_3\nextra_4\nextra_5\nextra_6\nextra_7\nextra_8\nextra_9\nextra_10\n\nThe LLM decides which fact belongs to which column.\n\nPython must NOT rename, move, calculate,\nguess, or repair values.\n\nIf a value is absent, use an empty string\nor null.\n\nRecord rules:\n\n- Each page may be its own record.\n- Never merge two unrelated pages.\n- A page that continues a table belongs to\n  the appropriate continuing record.\n- Never include subtotal, total, or grand-total\n  rows as line items.\n- Fee/charge rows that belong to an item\n  remain associated with that item.\n\nLine-item rules:\n\n- UNIT → unit\n- ITEM DESCRIPTION → item_description\n- QUANTITY → quantity\n- Do NOT put unit into item_code.\n- Do NOT put item_description into item_code.\n- Do not calculate missing rate or line_amount.\n\nField rules:\n\n- Each field contains one atomic fact.\n- Strip printed labels from values.\n- Do not invent values.\n- Do not duplicate the same printed occurrence.\n- Do not record placeholders such as N/A or \"-\".\n\nExtra slots:\n\n- Use extra_1 through extra_10\n  only for qualifying facts that do not fit\n  the named columns.\n- Keep the same extra slot meaning across batches.\n- Previously assigned extra slots must keep\n  their meaning.\n\n\n\nReturn ONLY valid JSON.\n\nRequired structure:\n\n{\n  \"records\": [\n    {\n      \"page\": 1,\n      \"header\": {},\n      \"line_items\": []\n    }\n  ],\n  \"column_types\": {}\n}\n\nDocument:\n\n--- Page 1 ---\nDEBIT NOTE\n                                              CHUNNU LAL BAKERY\n                                        123, LAL BUNGLOW, KANPUR - 9\n            No. 244\n            Date: 25th May,2024\n                                                                                            Amount\n            Against: M/s SHUBDEEP FLOUR MILL,                                                 (INR )\n            GANDHIGRAM KANPUR\n            Goods Returned as per Delivery Challan No. 1225\n                                                                                             7,000\n                                                                                 TOTAL       7,000\n            (Rupees Seven Thousand Only)\n            CHUNNULAL\n                                                                                           MANAGER\n\n\n\n\nIMPORTANT POINTS\n\n   1. This Debit Note serves as a sample for student use only.\n   2. On the following page, you will find a Debit Note tailored for your specific project.\n   3. Please utilize it by filling in the blank spaces with the necessary details such as the amount,\n      date, and other pertinent information.\n   4. If you have any further questions about the project, feel free to send me a message.\n",
+      "response": {
+        "id": "chatcmpl-7ts7oquz3hq5wr2nipn58p",
+        "object": "chat.completion",
+        "created": 1791545498,
+        "model": "qwen2.5-3b-instruct",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n  \"records\": [\n    {\n      \"page\": 1,\n      \"header\": {},\n      \"line_items\": []\n    }\n  ],\n  \"column_types\": {}\n}",
+              "reasoning_content": "",
+              "tool_calls": []
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 695,
+          "completion_tokens": 38,
+          "total_tokens": 733,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "stats": {},
+        "system_fingerprint": "qwen2.5-3b-instruct"
+      }
+    },
+    {
+      "batch_number": 2,
+      "page_numbers": [
+        2
+      ],
+      "prompt": "\nYou are a document information extraction system.\n\nExtract facts from the supplied document pages.\n\nUse ONLY these fixed columns:\n\ndocument_type\ndocument_number\ndocument_date\nseller_name\nseller_address\nseller_tax_id\nbuyer_name\nbuyer_address\nbuyer_tax_id\nreference_number\ndue_date\ncurrency\nsubtotal_amount\ndiscount_amount\ntax_amount\ntotal_amount\nremarks\nitem_code\nitem_description\nquantity\nunit\nrate\nline_amount\nextra_1\nextra_2\nextra_3\nextra_4\nextra_5\nextra_6\nextra_7\nextra_8\nextra_9\nextra_10\n\nThe LLM decides which fact belongs to which column.\n\nPython must NOT rename, move, calculate,\nguess, or repair values.\n\nIf a value is absent, use an empty string\nor null.\n\nRecord rules:\n\n- Each page may be its own record.\n- Never merge two unrelated pages.\n- A page that continues a table belongs to\n  the appropriate continuing record.\n- Never include subtotal, total, or grand-total\n  rows as line items.\n- Fee/charge rows that belong to an item\n  remain associated with that item.\n\nLine-item rules:\n\n- UNIT → unit\n- ITEM DESCRIPTION → item_description\n- QUANTITY → quantity\n- Do NOT put unit into item_code.\n- Do NOT put item_description into item_code.\n- Do not calculate missing rate or line_amount.\n\nField rules:\n\n- Each field contains one atomic fact.\n- Strip printed labels from values.\n- Do not invent values.\n- Do not duplicate the same printed occurrence.\n- Do not record placeholders such as N/A or \"-\".\n\nExtra slots:\n\n- Use extra_1 through extra_10\n  only for qualifying facts that do not fit\n  the named columns.\n- Keep the same extra slot meaning across batches.\n- Previously assigned extra slots must keep\n  their meaning.\n\n\n\nReturn ONLY valid JSON.\n\nRequired structure:\n\n{\n  \"records\": [\n    {\n      \"page\": 1,\n      \"header\": {},\n      \"line_items\": []\n    }\n  ],\n  \"column_types\": {}\n}\n\nDocument:\n\n--- Page 2 ---\nDEBIT NOTE\n\n\nNo.\nDate:\n                                Amount\nAgainst:                          (INR )\n\n\n\n                        TOTAL\n\n\n\n                                MANAGER\n\n\n\n\n           DEBIT NOTE\n\n\nNo.\nDate:\n                                Amount\nAgainst:                          (INR )\n\n\n\n                        TOTAL\n\n\n\n                                MANAGER\n",
+      "response": {
+        "id": "chatcmpl-yrypinx9zucnkzpsbk49",
+        "object": "chat.completion",
+        "created": 1791545512,
+        "model": "qwen2.5-3b-instruct",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "{\n  \"records\": [\n    {\n      \"page\": 2,\n      \"header\": {},\n      \"line_items\": []\n    }\n  ],\n  \"column_types\": {}\n}",
+              "reasoning_content": "",
+              "tool_calls": []
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+          }
+        ],
+        "usage": {
+          "prompt_tokens": 512,
+          "completion_tokens": 38,
+          "total_tokens": 550,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "stats": {},
+        "system_fingerprint": "qwen2.5-3b-instruct"
+      }
+    }
+  ]
+}
