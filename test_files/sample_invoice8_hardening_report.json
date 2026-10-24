@@ -2,9 +2,22 @@
   "input_file": "C:\\Users\\Koushik Kumar\\OneDrive\\Desktop\\document_excel_pipeline\\test_files\\sample_invoice8.pdf",
   "model": "qwen2.5-3b-instruct",
   "invented_keys": [],
-  "type_warnings": [],
+  "type_warnings": [
+    {
+      "column": "total_amount",
+      "row": 2,
+      "value": "Balance Due: $495.00",
+      "expected": "numeric"
+    },
+    {
+      "column": "total_amount",
+      "row": 3,
+      "value": "Balance Due: $495.00",
+      "expected": "numeric"
+    }
+  ],
   "dropped_columns": [],
   "record_count": 1,
-  "excel_row_count": 3,
-  "elapsed_seconds": 65.01
+  "excel_row_count": 2,
+  "elapsed_seconds": 229.12
 }

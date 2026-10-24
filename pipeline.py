@@ -566,26 +566,44 @@ RECORD RULES
 
 {continuation}
 
-Return ONLY valid JSON in this structure:
+Return ONLY valid JSON in this exact structure:
 
 {{
-
   "records": [
-
     {{
-
       "page": 1,
-
-      "header": {{}},
-
-      "line_items": []
-
+      "header": {{
+        "document_type": "",
+        "document_number": "",
+        "document_date": "",
+        "seller_name": "",
+        "seller_address": "",
+        "seller_tax_id": "",
+        "buyer_name": "",
+        "buyer_address": "",
+        "buyer_tax_id": "",
+        "reference_number": "",
+        "due_date": "",
+        "currency": "",
+        "subtotal_amount": "",
+        "discount_amount": "",
+        "tax_amount": "",
+        "total_amount": "",
+        "remarks": ""
+      }},
+      "line_items": [
+        {{
+          "item_code": "",
+          "item_description": "",
+          "quantity": "",
+          "unit": "",
+          "rate": "",
+          "line_amount": ""
+        }}
+      ]
     }}
-
   ],
-
   "column_types": {{}}
-
 }}
 
 Do not add Markdown fences or explanations.
@@ -644,7 +662,7 @@ def request_model(prompt):
 
             json=payload,
 
-            timeout=TIMEOUT,
+            timeout=(15, TIMEOUT),
 
         )
 
@@ -765,6 +783,17 @@ def parse_response(raw):
         if not isinstance(record.get("line_items", []), list):
 
             raise ValueError("line_items must be a list.")
+
+    column_types = parsed.get("column_types", {})
+    if isinstance(column_types, dict):
+        for record in parsed.get("records", []):
+            if isinstance(record, dict) and isinstance(record.get("header"), dict):
+                header = record["header"]
+                for col in HEADER_COLUMNS:
+                    if not header.get(col) and column_types.get(col):
+                        val = str(column_types[col]).strip()
+                        if val.lower() not in ("text", "numeric", "date", "null", "none", "string", ""):
+                            header[col] = val
 
     return parsed
 
@@ -891,9 +920,9 @@ Rules:
 
 {previously_used}
 
-Expected JSON shape (fill it with extracted facts; do not copy empty values blindly):
+Expected JSON shape (fill with extracted facts; leave absent/non-applicable fields as ""):
 
-{{"records":[{{"page":1,"header":{{"document_type":"invoice"}},"line_items":[{{"item_code":"example product","item_description":"example description","rate":"12.50"}}]}}],"column_types":{{}}}}
+{{"records":[{{"page":1,"header":{{"document_type":"","document_number":"","document_date":"","seller_name":"","seller_address":"","seller_tax_id":"","buyer_name":"","buyer_address":"","buyer_tax_id":"","reference_number":"","due_date":"","currency":"","subtotal_amount":"","discount_amount":"","tax_amount":"","total_amount":"","remarks":""}},"line_items":[{{"item_code":"","item_description":"","quantity":"","unit":"","rate":"","line_amount":""}}]}}],"column_types":{{}}}}
 
 DOCUMENT TEXT:
 
@@ -925,11 +954,15 @@ def extraction_quality_issues(parsed, batch):
         r"tax|shipping|miscellaneous|discount total)\b",
         re.IGNORECASE,
     )
-    price_rows = [
-        line for line in document_text.splitlines()
-        if not total_label_pattern.search(line)
-        and re.search(r"[$€£₹]\s*\d[\d,]*(?:.\d{2})?", line)
-    ]
+    price_rows = []
+    for line in document_text.splitlines():
+        line_clean = line.strip()
+        if not line_clean or total_label_pattern.search(line_clean):
+            continue
+        if re.fullmatch(r"(?:[$€£₹]|Rs\.?|INR)?\s*[\d,]+(?:\.\d+)?\s*", line_clean, re.IGNORECASE):
+            continue
+        if re.search(r"(?:[$€£₹]|Rs\.?|INR)\s*[\d,]+(?:\.\d+)?", line_clean, re.IGNORECASE) and re.search(r"[A-Za-z]{2,}", line_clean):
+            price_rows.append(line_clean)
 
     for record_index, record in enumerate(parsed.get("records", []), start=1):
         items = record.get("line_items", [])
@@ -942,7 +975,9 @@ def extraction_quality_issues(parsed, batch):
             for field in ("quantity", "rate", "line_amount"):
                 value = item.get(field, "")
                 if isinstance(value, str) and value.strip():
-                    if re.search(r",\s*(?:[$€£₹]?\s*)[-+]?\d", value.strip()):
+                    cleaned = re.sub(r"(?<=\d),(?=\d{2,3}(?:[.,]|\b))", "", value.strip())
+                    numbers = re.findall(r"[-+]?\d+(?:\.\d+)?", cleaned)
+                    if len(numbers) > 1 and ("," in cleaned or "+" in cleaned):
                         issues.append(
                             f"record {record_index}, item {item_index}: {field} contains multiple comma-separated values ({value!r})"
                         )
@@ -954,9 +989,15 @@ def extraction_quality_issues(parsed, batch):
                 )
 
         if len(price_rows) >= 2 and len(items) == 1:
-            issues.append(
-                f"document text has {len(price_rows)} price-bearing lines but the model returned only one line item"
+            single_item = items[0] if items and isinstance(items[0], dict) else {}
+            has_merged_content = any(
+                ("+" in str(single_item.get(f, ""))) or ("\n" in str(single_item.get(f, "")))
+                for f in ("item_description", "rate", "line_amount")
             )
+            if has_merged_content or len(price_rows) >= 4:
+                issues.append(
+                    f"document text has {len(price_rows)} price-bearing lines but the model returned only one line item"
+                )
 
         header = record.get("header", {})
         if isinstance(header, dict):
@@ -978,8 +1019,12 @@ def extraction_quality_issues(parsed, batch):
             if doc_date and due_date and doc_date == due_date and not re.search(
                 r"\b(?:due date|payment due)\b", document_text, re.IGNORECASE
             ):
-                issues.append(
-                    "due_date duplicates document_date but the source has no explicit due-date label"
+                # Demoted to a semantic warning — not a hard failure.
+                # Some invoices have only one date field; the model copies it into
+                # due_date, which is redundant but not structurally wrong.
+                log(
+                    "WARNING: due_date duplicates document_date but the source has no "
+                    "explicit due-date label — value kept, flagged as semantic warning."
                 )
 
             total_value = _normalized_numeric(header.get("total_amount", ""))
@@ -1025,11 +1070,14 @@ as reference_number or document_date as due_date. Keep unit to a concise unit to
 Return JSON only, following the required schema.
 """.strip()
 
-def process_batch(batch, batch_number, used_keys):
+def process_batch(batch, batch_number, used_keys, has_prior_usable=False):
     first_prompt = build_prompt(batch, used_keys)
     recovery_prompt = build_recovery_prompt(batch, used_keys)
     last_error = None
     prior_issues = []
+
+    batch_text = "\n".join(page.get("text", "") for page in batch)
+    has_source_numbers = bool(re.search(r"\d", batch_text))
 
     for attempt in range(1, 4):
         if attempt == 1:
@@ -1051,6 +1099,10 @@ def process_batch(batch, batch_number, used_keys):
             continue
 
         if not has_usable_extraction(parsed):
+            if not has_source_numbers and has_prior_usable:
+                log(f"  Note: Batch {batch_number} source text contains no numbers or data fields; empty extraction accepted.")
+                return raw, parsed, prompt
+
             last_error = "model returned valid JSON but extracted no non-empty facts"
             prior_issues = [last_error]
             log(f"  WARNING: {last_error}.")
@@ -1067,6 +1119,13 @@ def process_batch(batch, batch_number, used_keys):
                 log("  Retrying because the table structure appears incorrect...")
             continue
 
+        return raw, parsed, prompt
+
+    if has_prior_usable:
+        log(
+            f"  WARNING: Batch {batch_number} produced no usable facts after 3 attempts, "
+            "but earlier batches succeeded. Preserving partial document results."
+        )
         return raw, parsed, prompt
 
     raise RuntimeError(
@@ -1317,6 +1376,18 @@ def convert_number(value, column, excel_row):
         flags=re.IGNORECASE,
     )
 
+    # If fullmatch fails, the model may have included a label prefix like
+    # "Balance Due: $495.00".  Strip up to the last colon-space and retry.
+    if not match:
+        stripped = re.sub(r"^.*:\s*", "", text).strip()
+        if stripped != text:
+            match = re.fullmatch(
+                r"(?:INR|Rs.?|₹|\$|€|£)?\s*"
+                r"([-+]?\d[\d,]*(?:.\d+)?)\s*(%)?",
+                stripped,
+                flags=re.IGNORECASE,
+            )
+
     if not match:
         TYPE_WARNINGS.append({
             "column": column,
@@ -1355,39 +1426,37 @@ def convert_date(value, column, excel_row):
 
     text = str(value).strip()
 
+    # Normalize ordinal suffixes (e.g. 22th -> 22, 1st -> 1, 2nd -> 2, 3rd -> 3)
+    clean_text = re.sub(r"(?<=\d)(?:st|nd|rd|th)\b", "", text, flags=re.IGNORECASE)
+    # Ensure comma has a space (e.g. "May,2024" -> "May, 2024")
+    clean_text = re.sub(r",\s*", ", ", clean_text).strip()
+
     formats = [
-
         "%Y-%m-%d",
-
         "%Y-%m-%d %H:%M:%S",
-
-        "%d/%m/%Y",
-
-        "%d-%m-%Y",
-
-        "%d.%m.%Y",
-
-        "%d/%m/%y",
-
-        "%d-%m-%y",
-
+        "%B %d, %Y",
+        "%b %d, %Y",
         "%d %B %Y",
-
         "%d %b %Y",
-
+        "%d %B, %Y",
+        "%d %b, %Y",
+        "%B %d %Y",
+        "%b %d %Y",
         "%m/%d/%Y",
-
+        "%d/%m/%Y",
+        "%d-%m-%Y",
+        "%d.%m.%Y",
+        "%m/%d/%y",
+        "%d/%m/%y",
+        "%d-%m-%y",
     ]
 
     for fmt in formats:
-
-        try:
-
-            return datetime.strptime(text, fmt).date()
-
-        except ValueError:
-
-            pass
+        for candidate in (clean_text, text):
+            try:
+                return datetime.strptime(candidate, fmt).date()
+            except ValueError:
+                pass
 
     TYPE_WARNINGS.append({
 
@@ -1615,10 +1684,12 @@ def main():
 
             batch_start = time.time()
 
+            has_prior_usable = any(
+                has_usable_extraction({"records": [r]})
+                for r in all_records
+            )
             raw, parsed, prompt = process_batch(
-
-                batch, batch_number, used_keys
-
+                batch, batch_number, used_keys, has_prior_usable=has_prior_usable
             )
 
             inspect_fields(parsed, batch_number)

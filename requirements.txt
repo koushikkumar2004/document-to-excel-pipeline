@@ -1,0 +1,9 @@
+# Runtime dependencies for document_excel_pipeline
+# Tested with Python 3.13.2 on Windows 11
+#
+# Install with:   pip install -r requirements.txt
+# Upgrade pinned: pip install --upgrade -r requirements.txt
+
+requests>=2.32,<3.0   # HTTP calls to LM Studio REST API
+openpyxl>=3.1,<4.0    # Excel (.xlsx) generation and styling
+pypdf>=5.0,<6.0       # PDF metadata / fallback reading (legacy milestone scripts)

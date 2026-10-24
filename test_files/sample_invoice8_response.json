@@ -7,18 +7,18 @@
         1
       ],
       "prompt_kind": "discovery",
-      "prompt": "\n\nYou are a precise document information extraction system.\n\nExtract only facts supported by the supplied document.\n\nUse ONLY these fixed column names:\n\ndocument_type\ndocument_number\ndocument_date\nseller_name\nseller_address\nseller_tax_id\nbuyer_name\nbuyer_address\nbuyer_tax_id\nreference_number\ndue_date\ncurrency\nsubtotal_amount\ndiscount_amount\ntax_amount\ntotal_amount\nremarks\nitem_code\nitem_description\nquantity\nunit\nrate\nline_amount\nextra_1\nextra_2\nextra_3\nextra_4\nextra_5\nextra_6\nextra_7\nextra_8\nextra_9\nextra_10\n\nGENERAL RULES\n\n1. Never invent, guess, calculate, or fill missing values.\n\n2. Represent absent or blank source values as \"\".\n\n3. Preserve the distinction between source columns.\n\n4. Do not combine values from different table rows.\n\n5. Do not combine prices from different items.\n\n6. Do not create additional column names.\n\n7. Do not put a currency symbol alone into a monetary field.\n\n8. Preserve printed values and their meaning.\n\n9. Do not treat subtotal, tax, shipping, or grand-total rows\n\n   as individual items.\n\nLINE-ITEM TABLE RULES — CRITICAL\n\n1. Every distinct source-table item row must become exactly\n\n   one object in \"line_items\".\n\n2. If the source has four items, return four line-item objects.\n\n3. Read each table row horizontally. Keep its values together.\n\n4. Never merge two or more source rows into one item.\n\n5. Do not put several prices into one field.\n\n6. Map a product/service name to \"item_code\" when that is\n\n   the closest available named field.\n\n7. Map the explanatory text to \"item_description\".\n\n8. Map quantity only if the source explicitly supplies it.\n\n   A blank quantity must remain blank, not 1.\n\n9. Map units such as hour, hours, kg, or pieces to \"unit\".\n\n10. Map a printed unit price to \"rate\".\n\n11. Map a printed item total to \"line_amount\".\n\n12. Do not copy a rate into line_amount if the line total is blank.\n\n13. Do not calculate a missing line total.\n\n14. If a total cell contains only \"$\" or another currency symbol,\n\n    return \"\" for line_amount.\n\n15. If a cell is unclear, do not guess its value.\n\nRATES, UNITS AND CURRENCY\n\n- For a value such as \"$50.00/hour\", extract the numeric rate\n\n  as 50.00 and the unit as \"hour\" when the source supports it.\n\n- Do not place \"$\" alone into rate or line_amount.\n\n- Use currency for the currency code/name if identifiable.\n\n- Keep meaningful units and descriptions.\n\nDISCOUNTS\n\n- discount_amount is only for a printed monetary discount.\n\n- Do not put a percentage such as 20% into discount_amount.\n\n- There is no dedicated discount percentage column in this schema.\n\n  Do not invent one or misrepresent the percentage.\n\nHEADER RULES — LABELS MUST MATCH\n\n- document_number is the value printed beside labels such as \"Invoice #\",\n  \"Invoice No.\", \"Document Number\", or equivalent.\n- reference_number is ONLY a separate PO/reference/order number printed beside\n  a reference label. Never copy document_number into reference_number. If no\n  separate reference value is printed, use \"\".\n- document_date is the value beside \"Invoice Date\" or \"Document Date\".\n- due_date is ONLY a value beside \"Due Date\" / \"Payment Due\". Never copy\n  document_date into due_date. If no due date is printed, use \"\".\n- subtotal_amount must match the amount printed beside \"Subtotal\".\n- total_amount should match the final invoice total / \"Balance Due\" / \"Grand\n  Total\" when that label is present. Do not substitute \"Amount Due\" or a\n  remittance amount if a separate balance/grand total is printed.\n- Never calculate or derive an amount from quantity, rate, discount, or other\n  values. Use the amount printed in that item's own Total column.\n- Keep seller and buyer details separate where identifiable.\n\nEXTRA SLOTS\n\n- Use extra_1 through extra_10 only for facts not\n\n  covered by named columns.\n\n- Reuse a slot only for the same concept.\n\n- Do not use extra slots instead of a suitable named field.\n\nRECORD RULES\n\n- Keep unrelated documents separate.\n\n- A page that continues a table should not be treated as a new\n\n  unrelated document.\n\n- The \"page\" value must be a supplied page number.\n\n\n\nReturn ONLY valid JSON in this structure:\n\n{\n\n  \"records\": [\n\n    {\n\n      \"page\": 1,\n\n      \"header\": {},\n\n      \"line_items\": []\n\n    }\n\n  ],\n\n  \"column_types\": {}\n\n}\n\nDo not add Markdown fences or explanations.\n\nDOCUMENT:\n\n--- Page 1 ---\nYour Company\n                                                           Invoice\n\nBill To:\nClient Name                                                 Invoice #:        0001\nAddress\nCity, ST Zip                                                Invoice Date:     5/6/03\n                                                            Customer ID:      ClientID\n\n\n\n\nDate        Your Order #       Our Order #         Sales Rep.      FOB                Ship Via        Terms          Tax ID\n5/6/03                                             J. Q. Public                       N/A             C.O.D.\n\n\nQuantity   Item            Units             Description                 Discount %         Taxable    Unit Price         Total\n1          Training                          3 Hours of Training                                       $50.00/hour        $150.00\n                                             1 Hour of Digital\n1          Photos                                                                                      $25.00/hour        $25.00\n                                             Photography.\n                                             8 Hours of Website\n1          WebDev                                                             20%                      $50.00/hour        $320.00\n                                             Development\n\n\n\n\n                                                                                                       Subtotal           $495.00\n\n                                                                                                       Tax\n       REMITTANCE\n                                                                                                       Shipping\n       Customer ID:\n       Date:                                                                                           Miscellaneous\n       Amount Due:      $247.50                                                                        Balance Due        $495.00\n       Amount Enclosed:\n\n\n\n\n         Your Company                   Phone: 101-555-1212\n         Your Address                   Email: You@yourcompany.com\n         City, ST Zip\n\n\n\n\n                                                                                                         Your Company\n\n",
+      "prompt": "Extract invoice/document data from the text below. The previous attempt returned\n\nan empty record, but you must inspect the visible text and extract the facts that\n\nare actually present.\n\nUse only these output field names:\n\ndocument_type\ndocument_number\ndocument_date\nseller_name\nseller_address\nseller_tax_id\nbuyer_name\nbuyer_address\nbuyer_tax_id\nreference_number\ndue_date\ncurrency\nsubtotal_amount\ndiscount_amount\ntax_amount\ntotal_amount\nremarks\nitem_code\nitem_description\nquantity\nunit\nrate\nline_amount\nextra_1\nextra_2\nextra_3\nextra_4\nextra_5\nextra_6\nextra_7\nextra_8\nextra_9\nextra_10\n\nRules:\n\n- Return JSON only, with top-level keys \"records\" and \"column_types\".\n\n- Each record must have \"page\", \"header\", and \"line_items\".\n\n- Use the supplied page number.\n\n- Put document-level facts in \"header\".\n\n- Put EACH distinct product/service table row into its own object in \"line_items\".\n\n- Keep each product name and its own description/rate together.\n\n- Use item_code for a product/service name when no dedicated item-name column exists.\n\n- Use item_description for its descriptive text.\n\n- Put a printed unit price in rate. For \"$50.00/hour\", rate is \"50.00\"\n  and unit is \"hour\" (the unit suffix of the printed unit price).\n- The unit field should contain ONLY a concise measurement unit such as hour,\n  day, kg, item, or piece. Do not copy description phrases into unit.\n- item_description must preserve descriptive text, e.g. \"8 Hours of Website\n  Development\"; do not use the description as the unit.\n- Use the printed item Total exactly. Never calculate line_amount from quantity\n  and rate, even when a discount percentage appears on the row. If the rate and\n  quantity imply 400 but the printed row total says 320, extract the printed\n  320, not a calculated 400.\n- For headers, match the value to the adjacent printed label. \"Amount Due\" and\n  \"Balance Due\" are distinct labels and may have different values.\n- If quantity or line total is blank in the source, return an empty string for it.\n- Never calculate totals, invent values, or combine different products/prices.\n\n- Leave unknown fields as empty strings. Do not return an empty record if facts\n\n  are visible in the supplied text.\n\n- Do not create keys outside the allowed field names.\n\n- Use extra_1 through extra_10 only for facts with no suitable named field.\n\n\n\nExpected JSON shape (fill with extracted facts; leave absent/non-applicable fields as \"\"):\n\n{\"records\":[{\"page\":1,\"header\":{\"document_type\":\"\",\"document_number\":\"\",\"document_date\":\"\",\"seller_name\":\"\",\"seller_address\":\"\",\"seller_tax_id\":\"\",\"buyer_name\":\"\",\"buyer_address\":\"\",\"buyer_tax_id\":\"\",\"reference_number\":\"\",\"due_date\":\"\",\"currency\":\"\",\"subtotal_amount\":\"\",\"discount_amount\":\"\",\"tax_amount\":\"\",\"total_amount\":\"\",\"remarks\":\"\"},\"line_items\":[{\"item_code\":\"\",\"item_description\":\"\",\"quantity\":\"\",\"unit\":\"\",\"rate\":\"\",\"line_amount\":\"\"}]}],\"column_types\":{}}\n\nDOCUMENT TEXT:\n\n--- Page 1 ---\nYour Company\n                                                           Invoice\n\nBill To:\nClient Name                                                 Invoice #:        0001\nAddress\nCity, ST Zip                                                Invoice Date:     5/6/03\n                                                            Customer ID:      ClientID\n\n\n\n\nDate        Your Order #       Our Order #         Sales Rep.      FOB                Ship Via        Terms          Tax ID\n5/6/03                                             J. Q. Public                       N/A             C.O.D.\n\n\nQuantity   Item            Units             Description                 Discount %         Taxable    Unit Price         Total\n1          Training                          3 Hours of Training                                       $50.00/hour        $150.00\n                                             1 Hour of Digital\n1          Photos                                                                                      $25.00/hour        $25.00\n                                             Photography.\n                                             8 Hours of Website\n1          WebDev                                                             20%                      $50.00/hour        $320.00\n                                             Development\n\n\n\n\n                                                                                                       Subtotal           $495.00\n\n                                                                                                       Tax\n       REMITTANCE\n                                                                                                       Shipping\n       Customer ID:\n       Date:                                                                                           Miscellaneous\n       Amount Due:      $247.50                                                                        Balance Due        $495.00\n       Amount Enclosed:\n\n\n\n\n         Your Company                   Phone: 101-555-1212\n         Your Address                   Email: You@yourcompany.com\n         City, ST Zip\n\n\n\n\n                                                                                                         Your CompanyTABLE-STRUCTURE RECOVERY — REQUIRED\nThe previous response failed structural/semantic validation:\n- total_amount '$247.50' does not match the printed Balance Due/Grand Total 495.00\n\nCorrect each listed issue by re-reading the exact source labels and table cells.\nDo not repeat a value merely because it was present in the previous response.\nRe-read the source table row by row. Do not return the same combined item.\nFor each physical product/service row, create one separate object in line_items.\nNever place comma-separated lists of different quantities, rates, item names, or\nline amounts into one item's fields. Do not put document/header facts inside\nline_items. Put invoice number/date/seller/buyer/subtotal/balance in header.\nA continuation line belongs to the closest relevant item description and is not\na new item unless it has its own item row.\nFor any field you cannot confidently identify, return an empty string.\nCheck every numeric amount against the actual printed cell/label before returning:\ndo not calculate a line amount from rate and quantity; discounts may make printed\ntotals differ from multiplication. Use \"Balance Due\"/\"Grand Total\" for total_amount\nwhen available, not a different \"Amount Due\" field. Do not duplicate document_number\nas reference_number or document_date as due_date. Keep unit to a concise unit token.\nReturn JSON only, following the required schema.",
       "raw_response": {
-        "id": "chatcmpl-u88mv840f5t54flebf613o",
+        "id": "chatcmpl-x8njpvy3lhfe04rg3gqz9r",
         "object": "chat.completion",
-        "created": 1791622171,
+        "created": 1792825751,
         "model": "qwen2.5-3b-instruct",
         "choices": [
           {
             "index": 0,
             "message": {
               "role": "assistant",
-              "content": "{\n  \"records\": [\n    {\n      \"page\": 1,\n      \"header\": {},\n      \"line_items\": [\n        {\n          \"item_code\": \"\",\n          \"item_description\": \"Training\",\n          \"quantity\": 1,\n          \"unit\": \"Hours of Training\",\n          \"rate\": \"$50.00/hour\",\n          \"line_amount\": \"$150.00\"\n        },\n        {\n          \"item_code\": \"\",\n          \"item_description\": \"Photos\",\n          \"quantity\": 1,\n          \"unit\": \"Hour of Digital Photography\",\n          \"rate\": \"$25.00/hour\",\n          \"line_amount\": \"$25.00\"\n        },\n        {\n          \"item_code\": \"\",\n          \"item_description\": \"WebDev\",\n          \"quantity\": 1,\n          \"unit\": \"Hours of Website Development\",\n          \"rate\": \"$50.00/hour\",\n          \"line_amount\": \"$320.00\"\n        }\n      ]\n    }\n  ],\n  \"column_types\": {\n    \"document_type\": \"\",\n    \"document_number\": \"Invoice #:        0001\",\n    \"document_date\": \"5/6/03\",\n    \"seller_name\": \"Your Company\",\n    \"seller_address\": \"Your Address\",\n    \"seller_tax_id\": \"City, ST Zip\",\n    \"buyer_name\": \"Client Name\",\n    \"buyer_address\": \"Address City, ST Zip\",\n    \"buyer_tax_id\": \"\",\n    \"reference_number\": \"J. Q. Public\",\n    \"due_date\": \"\",\n    \"currency\": \"\",\n    \"subtotal_amount\": \"$495.00\",\n    \"discount_amount\": null,\n    \"tax_amount\": null,\n    \"total_amount\": \"$247.50\",\n    \"remarks\": \"REMITTANCE\\nCustomer ID:\\nDate:\\nAmount Due:      $247.50\\nAmount Enclosed:\",\n    \"item_code\": \"\",\n    \"item_description\": \"\",\n    \"quantity\": 1,\n    \"unit\": \"\",\n    \"rate\": \"$50.00/hour\",\n    \"line_amount\": \"$150.00\"\n  }\n}",
+              "content": "{\n  \"records\": [\n    {\n      \"page\": 1,\n      \"header\": {\n        \"document_type\": \"\",\n        \"document_number\": \"0001\",\n        \"document_date\": \"5/6/03\",\n        \"seller_name\": \"Your Company\",\n        \"seller_address\": \"Your Address, City, ST Zip\",\n        \"seller_tax_id\": \"\",\n        \"buyer_name\": \"Client Name\",\n        \"buyer_address\": \"Address, City, ST Zip\",\n        \"buyer_tax_id\": \"ClientID\",\n        \"reference_number\": \"\",\n        \"due_date\": \"\",\n        \"currency\": \"\",\n        \"subtotal_amount\": \"$495.00\",\n        \"discount_amount\": \"\",\n        \"tax_amount\": \"\",\n        \"total_amount\": \"Balance Due: $495.00\",\n        \"remarks\": \"\"\n      },\n      \"line_items\": [\n        {\n          \"item_code\": \"Training 3 Hours of Training\",\n          \"item_description\": \"1 Hour of Digital Photography.\",\n          \"quantity\": \"1\",\n          \"unit\": \"\",\n          \"rate\": \"$25.00/hour\",\n          \"line_amount\": \"$25.00\"\n        },\n        {\n          \"item_code\": \"WebDev 8 Hours of Website Development\",\n          \"item_description\": \"8 Hours of Website Development\",\n          \"quantity\": \"1\",\n          \"unit\": \"\",\n          \"rate\": \"$50.00/hour\",\n          \"line_amount\": \"$320.00\"\n        }\n      ]\n    }\n  ],\n  \"column_types\": {}\n}",
               "reasoning_content": "",
               "tool_calls": []
             },
@@ -27,9 +27,9 @@
           }
         ],
         "usage": {
-          "prompt_tokens": 1357,
-          "completion_tokens": 461,
-          "total_tokens": 1818,
+          "prompt_tokens": 1298,
+          "completion_tokens": 333,
+          "total_tokens": 1631,
           "completion_tokens_details": {
             "reasoning_tokens": 0
           }
@@ -41,60 +41,46 @@
         "records": [
           {
             "page": 1,
-            "header": {},
+            "header": {
+              "document_type": "",
+              "document_number": "0001",
+              "document_date": "5/6/03",
+              "seller_name": "Your Company",
+              "seller_address": "Your Address, City, ST Zip",
+              "seller_tax_id": "",
+              "buyer_name": "Client Name",
+              "buyer_address": "Address, City, ST Zip",
+              "buyer_tax_id": "ClientID",
+              "reference_number": "",
+              "due_date": "",
+              "currency": "",
+              "subtotal_amount": "$495.00",
+              "discount_amount": "",
+              "tax_amount": "",
+              "total_amount": "Balance Due: $495.00",
+              "remarks": ""
+            },
             "line_items": [
               {
-                "item_code": "",
-                "item_description": "Training",
-                "quantity": 1,
-                "unit": "Hours of Training",
-                "rate": "$50.00/hour",
-                "line_amount": "$150.00"
-              },
-              {
-                "item_code": "",
-                "item_description": "Photos",
-                "quantity": 1,
-                "unit": "Hour of Digital Photography",
+                "item_code": "Training 3 Hours of Training",
+                "item_description": "1 Hour of Digital Photography.",
+                "quantity": "1",
+                "unit": "",
                 "rate": "$25.00/hour",
                 "line_amount": "$25.00"
               },
               {
-                "item_code": "",
-                "item_description": "WebDev",
-                "quantity": 1,
-                "unit": "Hours of Website Development",
+                "item_code": "WebDev 8 Hours of Website Development",
+                "item_description": "8 Hours of Website Development",
+                "quantity": "1",
+                "unit": "",
                 "rate": "$50.00/hour",
                 "line_amount": "$320.00"
               }
             ]
           }
         ],
-        "column_types": {
-          "document_type": "",
-          "document_number": "Invoice #:        0001",
-          "document_date": "5/6/03",
-          "seller_name": "Your Company",
-          "seller_address": "Your Address",
-          "seller_tax_id": "City, ST Zip",
-          "buyer_name": "Client Name",
-          "buyer_address": "Address City, ST Zip",
-          "buyer_tax_id": "",
-          "reference_number": "J. Q. Public",
-          "due_date": "",
-          "currency": "",
-          "subtotal_amount": "$495.00",
-          "discount_amount": null,
-          "tax_amount": null,
-          "total_amount": "$247.50",
-          "remarks": "REMITTANCE\nCustomer ID:\nDate:\nAmount Due:      $247.50\nAmount Enclosed:",
-          "item_code": "",
-          "item_description": "",
-          "quantity": 1,
-          "unit": "",
-          "rate": "$50.00/hour",
-          "line_amount": "$150.00"
-        }
+        "column_types": {}
       }
     }
   ]
