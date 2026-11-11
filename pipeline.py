@@ -471,6 +471,8 @@ LINE-ITEM TABLE RULES — CRITICAL
    one object in "line_items".
 
 2. If the source has four items, return four line-item objects.
+   Every distinct printed unit price or rate in the table represents a separate line item.
+   Never skip a row or merge consecutive product rows.
 
 3. Read each table row horizontally. Keep its values together.
 
@@ -478,11 +480,10 @@ LINE-ITEM TABLE RULES — CRITICAL
 
 5. Do not put several prices into one field.
 
-6. Map a product/service name to "item_code" when that is
+6. In tables with an "Item" or "Item Name" or "Product" column, map that name to "item_code",
+   and map the "Description" column to "item_description".
 
-   the closest available named field.
-
-7. Map the explanatory text to "item_description".
+7. Map explanatory or service text to "item_description".
 
 8. Map quantity only if the source explicitly supplies it.
 
@@ -528,18 +529,27 @@ DISCOUNTS
 
 HEADER RULES — LABELS MUST MATCH
 
-- document_number is the value printed beside labels such as "Invoice #",
-  "Invoice No.", "Document Number", or equivalent.
+- document_number is the primary identifier of the document, printed beside labels
+  such as "Invoice #", "Invoice No.", "Document Number", "Document No:", "Challan No.",
+  "Packing List No.", "Receipt No.", "Debit Note No.", "Credit Note No.", "PO Number",
+  "Order #", or simply "No." / "No.:" / "#".
 - reference_number is ONLY a separate PO/reference/order number printed beside
   a reference label. Never copy document_number into reference_number. If no
   separate reference value is printed, use "".
 - document_date is the value beside "Invoice Date" or "Document Date".
 - due_date is ONLY a value beside "Due Date" / "Payment Due". Never copy
   document_date into due_date. If no due date is printed, use "".
-- subtotal_amount must match the amount printed beside "Subtotal".
-- total_amount should match the final invoice total / "Balance Due" / "Grand
-  Total" when that label is present. Do not substitute "Amount Due" or a
-  remittance amount if a separate balance/grand total is printed.
+- subtotal_amount must match the amount printed beside "Subtotal" or "Total Amount before Tax".
+- total_amount should match the final printed total (e.g. beside "Total", "Total Amount",
+  "Total Amount after Tax", "Balance Due", "Grand Total"). Do not substitute "Amount Due"
+  or a remittance amount if a separate balance/grand total is printed.
+- For all monetary and numeric fields (total_amount, subtotal_amount, tax_amount, discount_amount,
+  line_amount, rate, quantity), always extract the printed NUMERIC/DIGIT value (e.g. "2,90,000.00"
+  or "290000.00" or "7,000"), NEVER word-form text like "Two lakh ninety thousand rupees only"
+  or "Seven Thousand Only". If an amount is printed only in words and no numeric total exists,
+  leave total_amount empty.
+- Never calculate, sum up, or add tax to an already tax-inclusive total. Extract only the exact
+  printed numeric amount that appears in the text. If a total line has only "$" with no digits, return "".
 - Never calculate or derive an amount from quantity, rate, discount, or other
   values. Use the amount printed in that item's own Total column.
 - Keep seller and buyer details separate where identifiable.
@@ -905,10 +915,23 @@ Rules:
   and rate, even when a discount percentage appears on the row. If the rate and
   quantity imply 400 but the printed row total says 320, extract the printed
   320, not a calculated 400.
+- document_number is the primary identifier of the document, printed beside labels
+  such as "Invoice #", "Invoice No.", "Document Number", "Document No:", "Challan No.",
+  "Packing List No.", "Receipt No.", "Debit Note No.", "Credit Note No.", "PO Number",
+  "Order #", or simply "No." / "No.:" / "#".
 - For headers, match the value to the adjacent printed label. "Amount Due" and
   "Balance Due" are distinct labels and may have different values.
+- total_amount should match the final printed total (e.g. beside "Total", "Total Amount",
+  "Total Amount after Tax", "Balance Due", "Grand Total"). Do not substitute "Amount Due"
+  or a remittance amount if a separate balance/grand total is printed.
+- For all monetary and numeric fields (total_amount, subtotal_amount, tax_amount, discount_amount,
+  line_amount, rate, quantity), always extract the printed NUMERIC/DIGIT value (e.g. "2,90,000.00"
+  or "290000.00" or "7,000"), NEVER word-form text like "Two lakh ninety thousand rupees only"
+  or "Seven Thousand Only".
 - If quantity or line total is blank in the source, return an empty string for it.
 - Never calculate totals, invent values, or combine different products/prices.
+- Every distinct printed unit price or rate in the table represents a separate line item.
+  Never skip a row or merge consecutive product rows.
 
 - Leave unknown fields as empty strings. Do not return an empty record if facts
 
@@ -951,6 +974,7 @@ def extraction_quality_issues(parsed, batch):
 
     total_label_pattern = re.compile(
         r"\b(subtotal|grand total|total due|balance due|amount due|amount enclosed|"
+        r"total fees|total costs|total amount before tax|total amount after tax|"
         r"tax|shipping|miscellaneous|discount total)\b",
         re.IGNORECASE,
     )
@@ -988,15 +1012,15 @@ def extraction_quality_issues(parsed, batch):
                     f"record {record_index}, item {item_index}: line_amount {item.get('line_amount')!r} has no matching numeric value in source text"
                 )
 
-        if len(price_rows) >= 2 and len(items) == 1:
-            single_item = items[0] if items and isinstance(items[0], dict) else {}
+        if len(price_rows) >= 2 and len(items) < len(price_rows):
+            single_item = items[0] if len(items) == 1 and isinstance(items[0], dict) else {}
             has_merged_content = any(
                 ("+" in str(single_item.get(f, ""))) or ("\n" in str(single_item.get(f, "")))
                 for f in ("item_description", "rate", "line_amount")
-            )
-            if has_merged_content or len(price_rows) >= 4:
+            ) if single_item else False
+            if has_merged_content or len(items) == 1 or (len(price_rows) <= 4 and len(items) < len(price_rows)):
                 issues.append(
-                    f"document text has {len(price_rows)} price-bearing lines but the model returned only one line item"
+                    f"document text has {len(price_rows)} price-bearing lines but the model returned only {len(items)} line item{'s' if len(items) != 1 else ''}"
                 )
 
         header = record.get("header", {})
@@ -1027,9 +1051,20 @@ def extraction_quality_issues(parsed, batch):
                     "explicit due-date label — value kept, flagged as semantic warning."
                 )
 
+            total_raw = str(header.get("total_amount", "")).strip()
+            if total_raw and not re.search(r"\d", total_raw) and re.search(r"\b(?:only|rupees|dollars|thousand|hundred|lakh|crore)\b", total_raw, re.IGNORECASE):
+                issues.append(
+                    f"total_amount {total_raw!r} was extracted as words; extract the printed numeric amount from the document instead"
+                )
+
             total_value = _normalized_numeric(header.get("total_amount", ""))
+            if total_value and total_value not in text_numbers:
+                issues.append(
+                    f"total_amount {header.get('total_amount')!r} has no matching numeric value in source text; extract only the printed total"
+                )
+
             balance_match = re.search(
-                r"\b(?:balance due|grand total|invoice total|total due)\b[^\r\n$€£₹]{0,30}[$€£₹]?\s*([\d,]+(?:.\d{2})?)",
+                r"\b(?:balance due|grand total|invoice total|total due|total amount after tax|total after tax)\b[^\r\n\d$€£₹]{0,40}[$€£₹]?\s*([\d,]+(?:\.\d{2})?)",
                 document_text,
                 re.IGNORECASE,
             )
@@ -1117,6 +1152,13 @@ def process_batch(batch, batch_number, used_keys, has_prior_usable=False):
             log("  WARNING: " + last_error)
             if attempt < 3:
                 log("  Retrying because the table structure appears incorrect...")
+                continue
+            if has_usable_extraction(parsed):
+                log(
+                    f"  WARNING: Batch {batch_number}: Structural validation warnings remain on attempt 3 "
+                    f"({'; '.join(issues)}), but usable facts were extracted. Preserving extracted data."
+                )
+                return raw, parsed, prompt
             continue
 
         return raw, parsed, prompt

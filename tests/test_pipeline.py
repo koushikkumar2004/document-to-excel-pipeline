@@ -128,6 +128,51 @@ class TestExtractionQuality(unittest.TestCase):
         with_item = {"records": [{"page": 1, "header": {}, "line_items": [{"item_code": "SKU-1"}]}]}
         self.assertTrue(pipeline.has_usable_extraction(with_item))
 
+    def test_total_amount_in_words_is_flagged(self):
+        batch = [{"page": 1, "text": "Total taxable value 2,90,000.00\nTwo lakh ninety thousand rupees only"}]
+        parsed = {
+            "records": [
+                {
+                    "page": 1,
+                    "header": {"total_amount": "Two lakh ninety thousand rupees only"},
+                    "line_items": [{"item_description": "Maize", "line_amount": "2,90,000.00"}],
+                }
+            ]
+        }
+        issues = pipeline.extraction_quality_issues(parsed, batch)
+        self.assertTrue(any("extracted as words" in issue for issue in issues))
+
+    def test_calculated_total_not_in_text_is_flagged(self):
+        batch = [{"page": 1, "text": "Total before Tax: 28000\nTax: 5040\nTotal Amount after Tax: 33040"}]
+        parsed = {
+            "records": [
+                {
+                    "page": 1,
+                    "header": {"total_amount": "38080"},
+                    "line_items": [{"item_description": "Item", "line_amount": "33040"}],
+                }
+            ]
+        }
+        issues = pipeline.extraction_quality_issues(parsed, batch)
+        self.assertTrue(any("has no matching numeric value in source text" in issue for issue in issues))
+
+    def test_missing_price_rows_is_flagged(self):
+        batch = [{"page": 1, "text": "Item 1 Description $50.00\nItem 2 Description $25.00\nItem 3 Description $320.00"}]
+        parsed = {
+            "records": [
+                {
+                    "page": 1,
+                    "header": {},
+                    "line_items": [
+                        {"item_description": "Item 1", "rate": "50.00", "line_amount": "50.00"},
+                        {"item_description": "Item 2", "rate": "25.00", "line_amount": "25.00"},
+                    ],
+                }
+            ]
+        }
+        issues = pipeline.extraction_quality_issues(parsed, batch)
+        self.assertTrue(any("price-bearing lines" in issue for issue in issues))
+
 
 class TestJSONParsingAndFallbacks(unittest.TestCase):
     def test_parse_response_markdown_fences(self):

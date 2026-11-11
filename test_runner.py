@@ -39,11 +39,11 @@ GROUND_TRUTH = {
         "min_rows": 1,
     },
     2: {
+        # Blank order form template (Biomobility software store).
+        # No document number, no filled totals — only unit prices are printed.
+        # Accuracy: verify 4 line items with printed rates are captured.
         "name": "sample_invoice2.pdf",
-        "doc_number": "112456",
-        "total_amount": 64.93,
-        "seller": "Vortex Services",
-        "min_rows": 1,
+        "min_rows": 4,
     },
     3: {
         "name": "sample_invoice3.pdf",
@@ -55,9 +55,11 @@ GROUND_TRUTH = {
         "min_rows": 2,
     },
     4: {
+        # Purchase Order PO-1001. Example Trading Co. buying from Example Supplies Co.
+        # 4 line items: tote bags, mailer boxes, tissue paper, thank-you cards.
         "name": "sample_invoice4.pdf",
-        "doc_number": "3872",
-        "total_amount": 4220.0,
+        "doc_number": "PO-1001",
+        "total_amount": 1743.60,
         "min_rows": 4,
     },
     5: {
@@ -69,15 +71,20 @@ GROUND_TRUTH = {
         "min_rows": 3,
     },
     6: {
+        # Delivery Challan DC-114 (fleetbooks.in template). Single item: Maize 250 bags.
+        # No monetary invoice total — taxable value is 2,90,000 (290000 INR).
+        # Document type is delivery challan, not invoice.
         "name": "sample_invoice6.pdf",
-        "doc_number": "6489",
-        "total_amount": 1888.0,
+        "doc_number": "DC-114",
+        "total_amount": 290000.0,
         "min_rows": 1,
     },
     7: {
+        # Attorney services invoice (sample). Firm Name / Ms. Jane J. Good Client.
+        # 6 professional service line items + 3 cost items = 9 rows.
+        # Total Amount Due: $1,982.50
         "name": "sample_invoice7.pdf",
-        "doc_number": "INV1048",
-        "total_amount": 1625.0,
+        "total_amount": 1982.50,
         "min_rows": 9,
     },
     8: {
@@ -90,27 +97,36 @@ GROUND_TRUTH = {
         "min_rows": 3,
     },
     9: {
+        # Valid B2B consulting invoice (replaced duplicate unfilled template).
+        # Seller: Vortex Tech Solutions Inc., Buyer: Acme Retail Group.
+        # Doc#: INV-2026-9042, Date: 2026-10-15, Total: 5940.0, 3 line items.
         "name": "sample_invoice9.pdf",
-        "doc_number": "112456",
-        "total_amount": 64.93,
-        "min_rows": 1,
+        "doc_number": "INV-2026-9042",
+        "doc_date": date(2026, 10, 15),
+        "seller": "Vortex Tech Solutions",
+        "buyer": "Acme Retail Group",
+        "total_amount": 5940.0,
+        "min_rows": 3,
     },
     10: {
+        # Commercial Invoice — blank export form. Buyer: StemcellCount.com / Oradix Inc., Toronto.
+        # 1 item: Fresh Cells Human WBC, Total Value $20.00
         "name": "sample_invoice10.pdf",
-        "doc_number": "INV-12345",
-        "total_amount": 1150.0,
+        "total_amount": 20.0,
         "min_rows": 1,
     },
     11: {
+        # Packing List — LAKAY BUSINESS LTDA., Brazil. Non-commercial sample shipment.
+        # PL No: PL-S-2025-001. 1 item: Refined Cane Sugar ICUMSA 45. No commercial value.
         "name": "sample_invoice11.pdf",
-        "doc_number": "1001",
-        "total_amount": 107.0,
+        "doc_number": "PL-S-2025-001",
         "min_rows": 1,
     },
     12: {
+        # Multi-page delivery receipts (AA SAVERS MART + FAMILYHEALTH & BEAUTY CORP.).
+        # 3 separate delivery receipts, no monetary values — quantity only.
+        # ~20 total line items across 3 pages.
         "name": "sample_invoice12.pdf",
-        "doc_number": "99824",
-        "total_amount": 22800.0,
         "min_rows": 20,
     },
     13: {
@@ -121,9 +137,10 @@ GROUND_TRUTH = {
         "min_rows": 1,
     },
     14: {
+        # Credit Note template — TaxUp India, Jaipur. Blank header fields.
+        # 1 active row: Qty 5, Rate 6000, Amount 30000, Discount 2000, Tax 5040, Total 33040.
         "name": "sample_invoice14.pdf",
-        "doc_number": "INV-10012",
-        "total_amount": 1250.0,
+        "total_amount": 33040.0,
         "min_rows": 1,
     },
     15: {

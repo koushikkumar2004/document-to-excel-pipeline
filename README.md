@@ -93,10 +93,15 @@ python pipeline.py path\to\invoice.pdf
 
 #### Outputs
 
+For each processed file `sample.pdf`, the pipeline produces up to 5 files in the same directory:
+
 | File | Description |
 |------|-------------|
-| `<name>_output.xlsx` | Structured Excel spreadsheet |
-| `<name>_pipeline_report.json` | Diagnostic JSON with warnings, invented keys, timing |
+| `<name>.xlsx` | Final structured Excel spreadsheet conforming to the fixed schema |
+| `<name>_raw.xlsx` | Unconverted Excel preserving raw model values and extra discovered keys |
+| `<name>_hardening_report.json` | Diagnostic report with type warnings, invented keys, and execution metrics |
+| `<name>_response.json` | Full LM Studio request prompt and raw model JSON completion |
+| `<name>_extracted.txt` | Clean text extracted from the document via pdftotext |
 
 ### Process a plain-text file
 

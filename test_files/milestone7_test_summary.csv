@@ -1,4 +1,10 @@
 Sample,Filename,ExecutionStatus,DurationSeconds,ExcelPath,Rows,InventedKeys,TypeWarnings,DroppedColumns,AccuracyStatus,AccuracyChecksPassed,AccuracyChecksFailed,FailureReason
-8,sample_invoice8.pdf,FAILED,212.83,,0,0,0,0,NOT_EVALUATED,,,
-13,sample_invoice13.pdf,SUCCESS,112.54,C:\Users\Koushik Kumar\OneDrive\Desktop\document_excel_pipeline\test_files\sample_invoice13.xlsx,2,0,2,0,PARTIAL,Row count (2 >= 1); Document Date 2024-05-22; Seller 'CHUNNU LAL BAKERY',"Document Number (expected '8752', got '')",
-15,sample_invoice15.pdf,SUCCESS,116.21,C:\Users\Koushik Kumar\OneDrive\Desktop\document_excel_pipeline\test_files\sample_invoice15.xlsx,2,0,0,0,PARTIAL,Row count (2 >= 1); Document Date 2024-05-25; Total Amount 7000.0; Seller 'CHUNNU LAL BAKERY',"Document Number (expected '244', got '')",
+2,sample_invoice2.pdf,FAILED,271.15,,0,0,0,0,NOT_EVALUATED,,,
+6,sample_invoice6.pdf,SUCCESS,83.18,C:\Users\Koushik Kumar\OneDrive\Desktop\document_excel_pipeline\test_files\sample_invoice6.xlsx,1,0,0,0,PASSED,Row count (1 >= 1); Document Number 'DC-114'; Total Amount 290000.0,,
+8,sample_invoice8.pdf,FAILED,222.76,,0,0,0,0,NOT_EVALUATED,,,
+9,sample_invoice9.pdf,FAILED,262.65,,0,0,0,0,NOT_EVALUATED,,,
+11,sample_invoice11.pdf,SUCCESS,62.86,C:\Users\Koushik Kumar\OneDrive\Desktop\document_excel_pipeline\test_files\sample_invoice11.xlsx,1,0,0,0,PARTIAL,Row count (1 >= 1),"Document Number (expected 'PL-S-2025-001', got '')","Ignoring wrong pointing object 16 0 (offset 0)
+Ignoring wrong pointing object 17 0 (offset 0)"
+13,sample_invoice13.pdf,SUCCESS,93.7,C:\Users\Koushik Kumar\OneDrive\Desktop\document_excel_pipeline\test_files\sample_invoice13.xlsx,2,0,2,0,PARTIAL,Row count (2 >= 1); Document Date 2024-05-22; Seller 'CHUNNU LAL BAKERY',"Document Number (expected '8752', got '')",
+14,sample_invoice14.pdf,FAILED,190.63,,0,0,0,0,NOT_EVALUATED,,,
+15,sample_invoice15.pdf,SUCCESS,102.38,C:\Users\Koushik Kumar\OneDrive\Desktop\document_excel_pipeline\test_files\sample_invoice15.xlsx,2,0,0,0,PARTIAL,Row count (2 >= 1); Document Number '244'; Document Date 2024-05-25; Total Amount 7000.0,"Seller (expected 'CHUNNU LAL BAKERY', got 'CHUNNULAL')",

@@ -1,28 +1,52 @@
-# Byte-compiled / optimized / DLL files
+
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
-*.so
-
 # Virtual environments
 .env
-.venv
-env/
+.env.*
+!.env.example
+.venv/
 venv/
+env/
 ENV/
 
-# Testing & caches
+# Secrets and local configuration
+config.ini
+*.pem
+*.key
+
+# Testing and caches
 .pytest_cache/
 .coverage
 htmlcov/
 
-# Poppler binary distribution
+# Poppler binaries
 bin/
 
-# OS generated
+# Generated pipeline outputs
+test_files/*_raw.xlsx
+test_files/*_response.json
+test_files/*_extracted.txt
+test_files/*_hardening_report.json
+test_files/*.xlsx
+
+# Backup files
+test_files_backup/
+*.bak
+
+# OS files
 Thumbs.db
 ehthumbs.db
 [Dd]esktop.ini
 .DS_Store
+
+# Generated test data
+test_files/*.json
+test_files/*.xlsx
+test_files/*_extracted.txt
+
+# Backup folders
+test_files_backup/

@@ -27,7 +27,7 @@ Complete these steps in order before running anything:
 - [ ] In LM Studio, open the **Local Server** tab and start the server
 - [ ] Load the Qwen model (the server status should say "Model loaded")
 - [ ] Run a quick test: `python pipeline.py test_files/sample_invoice.pdf`
-- [ ] Check the output: `test_files/sample_invoice_output.xlsx` should appear
+- [ ] Check the output: `test_files/sample_invoice.xlsx` should appear
 
 ---
 
